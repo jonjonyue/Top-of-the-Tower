@@ -15,7 +15,7 @@ public class character : MonoBehaviour
 	public int speed;
 
 	// Code variables
-	public bool isAlive = 0;
+	public bool isAlive = true;
 
 	// Use this for initialization
 	void Start ()
