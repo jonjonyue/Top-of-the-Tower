@@ -27,6 +27,7 @@ public class PlayerController : character {
 	private SpriteRenderer sr;
 	private Animator anim;
 	private bool attacking;
+	List<GameObject> nearEnemy = new List<GameObject>();
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
@@ -39,14 +40,29 @@ public class PlayerController : character {
 		Move ();
 		// we should only be able to attack once per press, not continuously
 		if (Input.GetKeyDown(KeyCode.Space)){
-			Attack ();
+			print ("calling attack");
+			StartCoroutine(Attack ());
 		}
 	}
 		
-	void Attack() {
+	void OnTriggerEnter(Collider col)
+	{
+		if (col.gameObject.tag == "Enemy") {
+			nearEnemy.Add(col.gameObject);
+		}
+	}
+	void OnTriggerExit(Collider col)
+	{
+		if (col.gameObject.tag == "Enemy") {
+			nearEnemy.Remove(col.gameObject);
+		}
+	}
+
+	IEnumerator Attack() {
 		// can't do 2 attacks at once
+		print("entering attack function");
 		if (attacking) {
-			return;
+			yield return new WaitForSeconds (0f);
 		}
 		// START THE ATTACK!!!
 		attacking = true;
@@ -57,6 +73,25 @@ public class PlayerController : character {
 
 		//ATTACK MECHANICS
 		//put your code here @Eric
+		var colors = new Color[2];
+
+		Vector3 pos = transform.position;
+		for(int i = 0; i < nearEnemy.Count;i++)
+		{
+			int damage = 2;
+			colors [1] = nearEnemy[i].GetComponent<Renderer>().material.color;
+			colors [0] = Color.red;
+			Vector3 vec = nearEnemy[i].transform.position;
+			Vector3 direction = vec - pos;
+			if(Vector3.Dot(direction, transform.forward)<0.7){
+				print("attacking");
+				character cha = (character)nearEnemy[i].GetComponent<character> ();
+				cha.health -= damage;
+				nearEnemy[i].GetComponent<Renderer>().material.color = colors[0];
+				yield return new WaitForSeconds(0.25f);
+				nearEnemy[i].GetComponent<Renderer>().material.color = colors[1];
+			}
+		}
 
 		// we are done attacking
 		attacking = false;
@@ -79,6 +114,7 @@ public class PlayerController : character {
 			this.transform.position = position;
 			sr.flipX = true;
 			anim.SetInteger ("direction", 1);
+			this.GetComponent<SphereCollider> ().center = new Vector3 (-.5f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.RightArrow)) {
 			Vector3 position = this.transform.position;
@@ -86,18 +122,21 @@ public class PlayerController : character {
 			this.transform.position = position;
 			sr.flipX = false;
 			anim.SetInteger ("direction", 1);
+			this.GetComponent<SphereCollider> ().center = new Vector3 (.6f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.DownArrow)) {
 			Vector3 position = this.transform.position;
 			position.z -= speed * Time.deltaTime;
 			this.transform.position = position;
 			anim.SetInteger ("direction", 0);
+			this.GetComponent<SphereCollider> ().center = new Vector3 (.4f, .5f, 0f);
 		}
 		if (Input.GetKey(KeyCode.UpArrow)) {
 			Vector3 position = this.transform.position;
 			position.z+= speed*Time.deltaTime;
 			this.transform.position = position;
 			anim.SetInteger ("direction", 3);
+			this.GetComponent<SphereCollider> ().center = new Vector3 (-.4f, .5f, 0f);
 		}
 		// check which way he is facing, set idle animation to that one
 		if (!Input.anyKey && !attacking) {
