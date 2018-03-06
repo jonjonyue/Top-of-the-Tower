@@ -7,7 +7,7 @@ public class character : MonoBehaviour
 	public enum charType {player, enemy};
 
 	// Informational
-	public string name;
+	public string charName;
 
 	// General Stats
 	public int health;
