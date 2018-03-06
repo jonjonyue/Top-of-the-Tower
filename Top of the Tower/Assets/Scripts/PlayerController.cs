@@ -40,7 +40,8 @@ public class PlayerController : character {
 		Move ();
 		// we should only be able to attack once per press, not continuously
 		if (Input.GetKeyDown(KeyCode.Space)){
-			Attack ();
+			print ("calling attack");
+			StartCoroutine(Attack ());
 		}
 	}
 		
@@ -57,10 +58,11 @@ public class PlayerController : character {
 		}
 	}
 
-	void Attack() {
+	IEnumerator Attack() {
 		// can't do 2 attacks at once
+		print("entering attack function");
 		if (attacking) {
-			return;
+			yield return new WaitForSeconds (0f);
 		}
 		// START THE ATTACK!!!
 		attacking = true;
@@ -82,9 +84,11 @@ public class PlayerController : character {
 			Vector3 vec = nearEnemy[i].transform.position;
 			Vector3 direction = vec - pos;
 			if(Vector3.Dot(direction, transform.forward)<0.7){
+				print("attacking");
 				character cha = (character)nearEnemy[i].GetComponent<character> ();
 				cha.health -= damage;
 				nearEnemy[i].GetComponent<Renderer>().material.color = colors[0];
+				yield return new WaitForSeconds(0.25f);
 				nearEnemy[i].GetComponent<Renderer>().material.color = colors[1];
 			}
 		}
