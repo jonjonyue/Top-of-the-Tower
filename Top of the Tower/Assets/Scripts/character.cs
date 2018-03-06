@@ -17,6 +17,9 @@ public class character : MonoBehaviour
 	// Code variables
 	public bool isAlive = true;
 
+	// Colliders
+	public attackCollider attackCollider;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -27,6 +30,14 @@ public class character : MonoBehaviour
 	void Update ()
 	{
 	
+	}
+
+	virtual public void takeDamage(int damage) {
+		health -= damage;
+
+		if (health <= 0) {
+			Destroy (gameObject);
+		}
 	}
 }
 

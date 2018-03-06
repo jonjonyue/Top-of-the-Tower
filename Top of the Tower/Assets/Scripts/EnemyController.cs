@@ -13,6 +13,9 @@ public class EnemyController : character {
 	private SpriteRenderer sr;
 	private Animator anim;
 	private bool attacking;
+
+	List<GameObject> nearEnemy = new List<GameObject>();
+
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
@@ -25,10 +28,26 @@ public class EnemyController : character {
 		Move ();
 	}
 
-	void Attack() {
+
+	void OnTriggerEnter(Collider col)
+	{
+		if (col.gameObject.tag == "Player") {
+			nearEnemy.Add(col.gameObject);
+		}
+	}
+
+	void OnTriggerExit(Collider col)
+	{
+		if (col.gameObject.tag == "Player") {
+			nearEnemy.Remove(col.gameObject);
+		}
+	}
+
+
+	IEnumerator Attack() {
 		// can't do 2 attacks at once
 		if (attacking) {
-			return;
+			yield break;
 		}
 		// START THE ATTACK!!!
 		attacking = true;
@@ -39,6 +58,27 @@ public class EnemyController : character {
 
 		//ATTACK MECHANICS
 		//put your code here @Eric
+		var colors = new Color[2];
+
+		Vector3 pos = transform.position;
+		for(int i = 0; i < nearEnemy.Count;i++)
+		{
+			int damage = 2;
+			colors [1] = nearEnemy[i].GetComponent<SpriteRenderer>().color;
+			colors [0] = Color.red;
+			Vector3 vec = nearEnemy[i].transform.position;
+			Vector3 direction = vec - pos;
+			if(Vector3.Dot(direction, transform.forward)<0.7){
+//				print("attacking");
+				character cha = (character)nearEnemy[i].GetComponent<character> ();
+				yield return new WaitForSeconds (.3f);
+				nearEnemy[i].GetComponent<Renderer>().material.color = colors[0];
+				yield return new WaitForSeconds(0.25f);
+				nearEnemy[i].GetComponent<Renderer>().material.color = colors[1];
+				cha.takeDamage (damage);
+			}
+		}
+
 
 		// we are done attacking
 		attacking = false;
@@ -73,7 +113,7 @@ public class EnemyController : character {
 				if (enemyAngle < 0.0f)
 					enemyAngle += 360;
 
-				Debug.Log ("Angle from the player is: " + enemyAngle);
+//				Debug.Log ("Angle from the player is: " + enemyAngle);
 
 				if (enemyAngle >= 315f || enemyAngle < 45f) { /* Right */
 //					Debug.Log ("Going Right!");
@@ -91,7 +131,7 @@ public class EnemyController : character {
 					anim.SetInteger ("direction", 0);
 				}
 			} else {
-				Attack ();
+				StartCoroutine(Attack ());
 			}
 		} else {
 			alert.SetActive (false);
@@ -107,6 +147,14 @@ public class EnemyController : character {
 					anim.SetInteger ("direction", 2);
 				}
 			}
+		}
+	}
+
+	override public void takeDamage(int damage) {
+		health -= damage;
+
+		if (health <= 0) {
+			Destroy (gameObject);
 		}
 	}
 }

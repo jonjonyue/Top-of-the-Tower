@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114799741740503852}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -258,12 +258,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ade869f93ce4eeba6f514956fcf306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Skeleton
+  charName: Skeleton
   health: 8
   defense: 0
   speed: 4
   isAlive: 1
-  aggroDistance: 10
+  aggroDistance: 6
   heroTransform: {fileID: 0}
   alert: {fileID: 1239707295526636}
 --- !u!135 &135143887241069120
@@ -326,7 +326,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ab360741eccf445d89e48cd4f28f8471, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
