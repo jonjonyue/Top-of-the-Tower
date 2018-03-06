@@ -90,23 +90,23 @@ public class EnemyController : character {
 //					Debug.Log ("Going Down!");
 					anim.SetInteger ("direction", 0);
 				}
-
-				// check which way he is facing, set idle animation to that one
-				if (!Input.anyKey && !attacking) {
-					int currAnim = anim.GetInteger ("direction");
-					if (currAnim == 3 || currAnim == 4) {
-						anim.SetInteger ("direction", 4);
-					} else if (currAnim == 1 || currAnim == 5) {
-						anim.SetInteger ("direction", 5);
-					} else {
-						anim.SetInteger ("direction", 2);
-					}
-				}
 			} else {
 				Attack ();
 			}
 		} else {
 			alert.SetActive (false);
+
+			// check which way he is facing, set idle animation to that one
+			if (!attacking) {
+				int currAnim = anim.GetInteger ("direction");
+				if (currAnim == 3 || currAnim == 4) {
+					anim.SetInteger ("direction", 4);
+				} else if (currAnim == 1 || currAnim == 5) {
+					anim.SetInteger ("direction", 5);
+				} else {
+					anim.SetInteger ("direction", 2);
+				}
+			}
 		}
 	}
 }
