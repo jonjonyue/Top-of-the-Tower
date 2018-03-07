@@ -61,7 +61,7 @@ public class EnemyController : character {
 
 	IEnumerator damage(PlayerController Char) {
 		Color originalColor = Char.gameObject.GetComponent<SpriteRenderer> ().color;
-		yield return new WaitForSeconds (.4f);
+		yield return new WaitForSeconds (.6f);
 		Char.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
 		yield return new WaitForSeconds (.1f);
 		Char.gameObject.GetComponent<SpriteRenderer> ().color = originalColor;

@@ -81,7 +81,7 @@ public class PlayerController : character {
 
 	IEnumerator damage(EnemyController Char) {
 		Color originalColor = Char.gameObject.GetComponent<SpriteRenderer> ().color;
-		yield return new WaitForSeconds (.4f);
+		yield return new WaitForSeconds (.6f);
 		Char.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
 		yield return new WaitForSeconds (.1f);
 		Char.gameObject.GetComponent<SpriteRenderer> ().color = originalColor;
@@ -139,7 +139,7 @@ public class PlayerController : character {
 	override public void takeDamage(int damage) {
 		health -= damage - defense;
 
-		print ("Hero took " + damage + " damage...");
+		print ("Hero took " + (damage - defense) + " damage...");
 		if (health <= 0) {
 			print ("Hero has died");
 		}
