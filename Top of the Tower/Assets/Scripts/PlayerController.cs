@@ -26,14 +26,21 @@ public class PlayerController : character {
 	public int mana;
 	private SpriteRenderer sr;
 	private Animator anim;
-	private bool attacking;
+	private bool canMove = true;
+//	private bool attacking;
+
 	List<GameObject> nearEnemy = new List<GameObject>();
+
+	public SphereCollider[] attackHitboxes;
+
+	private CharacterController cc;
 
 
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
 		anim = GetComponent<Animator> ();
+		cc = GetComponent < CharacterController> ();
 		attacking = false;
 	}
 	
@@ -43,11 +50,11 @@ public class PlayerController : character {
 		// we should only be able to attack once per press, not continuously
 		if (Input.GetKeyDown(KeyCode.Space)){
 //			print ("calling attack");
-			Attack ();
+			Attack (attackHitboxes[0]);
 		}
 	}
 
-	void Attack() {
+	void Attack(Collider col) {
 		// can't do 2 attacks at once
 //		print("entering attack function");
 		if (attacking) {
@@ -55,17 +62,30 @@ public class PlayerController : character {
 		}
 		// START THE ATTACK!!!
 		attacking = true;
+		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
 		//ATTACK ANIMATION
 		//Note: this depends on the direction (using Triggers)
 		anim.SetTrigger("attack"); 
 
-		//ATTACK MECHANICS
-		//put your code here @Eric
-		StartCoroutine(attackCollider.Attack());
+		foreach(Collider c in cols) {
+			if (c.tag == "Enemy") {
+				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
+				StartCoroutine(damage (enemy));
+			}
+		}
 
 		// we are done attacking
 		attacking = false;
+	}
+
+	IEnumerator damage(EnemyController Char) {
+		Color originalColor = Char.gameObject.GetComponent<SpriteRenderer> ().color;
+		yield return new WaitForSeconds (.4f);
+		Char.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
+		yield return new WaitForSeconds (.1f);
+		Char.gameObject.GetComponent<SpriteRenderer> ().color = originalColor;
+		Char.takeDamage (2);
 	}
 
 	// Moves the Player (if keys are down)
@@ -79,35 +99,27 @@ public class PlayerController : character {
 		// 2 - forward idle 
 		// 3 - back walk
 		// 4 - back idle
+
+		Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		cc.Move(move * Time.deltaTime * speed);
+
 		if (Input.GetKey(KeyCode.LeftArrow)) {
-			Vector3 position = this.transform.position;
-			position.x -= speed * Time.deltaTime;
-			this.transform.position = position;
 			sr.flipX = true;
 			anim.SetInteger ("direction", 1);
-			attackCollider.GetComponent<SphereCollider>().center = new Vector3 (-.5f, .3f, 0f);
+			attackHitboxes[0].center = new Vector3 (-.5f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.RightArrow)) {
-			Vector3 position = this.transform.position;
-			position.x += speed * Time.deltaTime;
-			this.transform.position = position;
 			sr.flipX = false;
 			anim.SetInteger ("direction", 1);
-			attackCollider.GetComponent<SphereCollider>().center = new Vector3 (.6f, .3f, 0f);
+			attackHitboxes[0].center = new Vector3 (.5f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.DownArrow)) {
-			Vector3 position = this.transform.position;
-			position.z -= speed * Time.deltaTime;
-			this.transform.position = position;
 			anim.SetInteger ("direction", 0);
-			attackCollider.GetComponent<SphereCollider>().center = new Vector3 (.4f, .5f, 0f);
+			attackHitboxes[0].center = new Vector3 (0f, .3f, -.5f);
 		}
 		if (Input.GetKey(KeyCode.UpArrow)) {
-			Vector3 position = this.transform.position;
-			position.z+= speed*Time.deltaTime;
-			this.transform.position = position;
 			anim.SetInteger ("direction", 3);
-			attackCollider.GetComponent<SphereCollider>().center = new Vector3 (-.4f, .5f, 0f);
+			attackHitboxes[0].center = new Vector3 (0f, .3f, .5f);
 		}
 		// check which way he is facing, set idle animation to that one
 		if (!Input.anyKey && !attacking) {
@@ -125,11 +137,21 @@ public class PlayerController : character {
 	}
 
 	override public void takeDamage(int damage) {
-		health -= damage;
+		health -= damage - defense;
 
+		print ("Hero took " + damage + " damage...");
 		if (health <= 0) {
 			print ("Hero has died");
 		}
 	}
-		
+
+//	void OnCollisionEnter(Collision collision) {
+//		if (collision.collider.tag == "Environment") {
+//			print ("Hitting the environment");
+//			canMove = false;
+//		}
+//	}
+//	void OnCollisionExit(Collision collision) {
+//		canMove = true;
+//	}
 }

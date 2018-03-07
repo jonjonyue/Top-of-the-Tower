@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - EnemyAttack
   - PlayerAttack
+  - wall1
+  - wall3
+  - Environment
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Hitbox
   - 
   - 
   - 

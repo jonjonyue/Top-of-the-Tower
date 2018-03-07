@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114871715131305870}
   m_Layer: 0
   m_Name: Attack Collider
-  m_TagString: Untagged
+  m_TagString: EnemyAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2407dce397b6048b7960f0d181b21cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Char: {fileID: 0}
 --- !u!135 &135463527785607640
 SphereCollider:
   m_ObjectHideFlags: 1

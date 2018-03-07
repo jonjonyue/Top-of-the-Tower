@@ -12,15 +12,19 @@ public class EnemyController : character {
 
 	private SpriteRenderer sr;
 	private Animator anim;
-	private bool attacking;
+//	private bool attacking;
 
-	List<GameObject> nearEnemy = new List<GameObject>();
+	public SphereCollider[] attackHitboxes;
+
+	CharacterController cc;
 
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
 		anim = GetComponent<Animator> ();
 		attacking = false;
+		cc = GetComponent<CharacterController> ();
+//		attackCollider.gameObject.SetActive (false);
 	}
 
 	// Update is called once per frame
@@ -28,57 +32,40 @@ public class EnemyController : character {
 		Move ();
 	}
 
-
-	void OnTriggerEnter(Collider col)
-	{
-		if (col.gameObject.tag == "Player") {
-			nearEnemy.Add(col.gameObject);
-		}
-	}
-
-	void OnTriggerExit(Collider col)
-	{
-		if (col.gameObject.tag == "Player") {
-			nearEnemy.Remove(col.gameObject);
-		}
-	}
-
-
-	IEnumerator Attack() {
+	void Attack(Collider col) {
 		// can't do 2 attacks at once
+		//		print("entering attack function");
 		if (attacking) {
-			yield break;
+			return;
 		}
 		// START THE ATTACK!!!
 		attacking = true;
+
+		// Get the hitboxes hit by the attack
+		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+
 
 		//ATTACK ANIMATION
 		//Note: this depends on the direction (using Triggers)
 		anim.SetTrigger("attack"); 
 
 		//ATTACK MECHANICS
-		//put your code here @Eric
-		var colors = new Color[2];
-
-		Vector3 pos = transform.position;
-		for(int i = 0; i < nearEnemy.Count;i++)
-		{
-			int damage = 2;
-			colors [1] = nearEnemy[i].GetComponent<SpriteRenderer>().color;
-			colors [0] = Color.red;
-			Vector3 vec = nearEnemy[i].transform.position;
-			Vector3 direction = vec - pos;
-			if(Vector3.Dot(direction, transform.forward)<0.7){
-//				print("attacking");
-				character cha = (character)nearEnemy[i].GetComponent<character> ();
-				yield return new WaitForSeconds (.3f);
-				nearEnemy[i].GetComponent<Renderer>().material.color = colors[0];
-				yield return new WaitForSeconds(0.25f);
-				nearEnemy[i].GetComponent<Renderer>().material.color = colors[1];
-				cha.takeDamage (damage);
+		foreach(Collider c in cols) {
+//			Debug.Log (c.name);
+			if (c.tag == "Player") {
+				PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
+				StartCoroutine(damage (player));
 			}
 		}
+	}
 
+	IEnumerator damage(PlayerController Char) {
+		Color originalColor = Char.gameObject.GetComponent<SpriteRenderer> ().color;
+		yield return new WaitForSeconds (.4f);
+		Char.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
+		yield return new WaitForSeconds (.1f);
+		Char.gameObject.GetComponent<SpriteRenderer> ().color = originalColor;
+		Char.takeDamage (2);
 
 		// we are done attacking
 		attacking = false;
@@ -105,7 +92,7 @@ public class EnemyController : character {
 				Vector3 unitVector = targetVector / targetVector.magnitude;
 
 				if (!anim.GetCurrentAnimatorStateInfo(0).IsName("BackAttack") && !anim.GetCurrentAnimatorStateInfo(0).IsName("ForwardAttack") && !anim.GetCurrentAnimatorStateInfo(0).IsName("HeroSideAttack")) {
-					transform.Translate (speed * Time.deltaTime * unitVector);
+					cc.Move (speed * Time.deltaTime * unitVector);
 				}
 
 				var enemyAngle = Mathf.Atan2 (targetVector.z, targetVector.x) * Mathf.Rad2Deg;
@@ -119,19 +106,23 @@ public class EnemyController : character {
 //					Debug.Log ("Going Right!");
 					sr.flipX = false;
 					anim.SetInteger ("direction", 1);
+					attackHitboxes[0].center = new Vector3 (.5f, .3f, 0f);
 				} else if (enemyAngle >= 45f && enemyAngle < 135f) { /* Up */
 //					Debug.Log ("Going Up!");
 					anim.SetInteger ("direction", 3);
+					attackHitboxes[0].center = new Vector3 (0f, .3f, -.5f);
 				} else if (enemyAngle >= 135f && enemyAngle < 225f) { /* Left */
 					sr.flipX = true;
 					anim.SetInteger ("direction", 1);
+					attackHitboxes[0].center = new Vector3 (-.5f, .3f, 0f);
 //					Debug.Log ("Going Left");
 				} else if (enemyAngle >= 225f && enemyAngle < 315f) { /* Down */
 //					Debug.Log ("Going Down!");
 					anim.SetInteger ("direction", 0);
+					attackHitboxes[0].center = new Vector3 (0f, .3f, .5f);
 				}
-			} else {
-				StartCoroutine(Attack ());
+			} else if (!attacking) {
+				Attack (attackHitboxes[0]);
 			}
 		} else {
 			alert.SetActive (false);
@@ -153,6 +144,7 @@ public class EnemyController : character {
 	override public void takeDamage(int damage) {
 		health -= damage;
 
+		print (charName + " took " + damage + " damage...");
 		if (health <= 0) {
 			Destroy (gameObject);
 		}
