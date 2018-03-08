@@ -26,10 +26,6 @@ public class PlayerController : character {
 	public int mana;
 	private SpriteRenderer sr;
 	private Animator anim;
-	private bool canMove = true;
-//	private bool attacking;
-
-	List<GameObject> nearEnemy = new List<GameObject>();
 
 	public SphereCollider[] attackHitboxes;
 
@@ -56,26 +52,22 @@ public class PlayerController : character {
 
 	void Attack(Collider col) {
 		// can't do 2 attacks at once
-//		print("entering attack function");
-		if (attacking) {
-			return;
-		}
-		// START THE ATTACK!!!
-		attacking = true;
-		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+		if (!attacking) {
+			// START THE ATTACK!!!
+			attacking = true;
+			Collider[] cols = Physics.OverlapBox (col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask ("Hitbox"));
 
-		//ATTACK ANIMATION
-		//Note: this depends on the direction (using Triggers)
-		anim.SetTrigger("attack"); 
+			//ATTACK ANIMATION
+			//Note: this depends on the direction (using Triggers)
+			anim.SetTrigger ("attack"); 
 
-		foreach(Collider c in cols) {
-			if (c.tag == "Enemy") {
-				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
-				StartCoroutine(damage (enemy));
+			foreach (Collider c in cols) {
+				if (c.tag == "Enemy") {
+					EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
+					StartCoroutine (damage (enemy));
+				}
 			}
 		}
-
-		// we are done attacking
 		attacking = false;
 	}
 
@@ -106,20 +98,20 @@ public class PlayerController : character {
 		if (Input.GetKey(KeyCode.LeftArrow)) {
 			sr.flipX = true;
 			anim.SetInteger ("direction", 1);
-			attackHitboxes[0].center = new Vector3 (-.5f, .3f, 0f);
+			attackHitboxes[0].center = new Vector3 (-.6f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.RightArrow)) {
 			sr.flipX = false;
 			anim.SetInteger ("direction", 1);
-			attackHitboxes[0].center = new Vector3 (.5f, .3f, 0f);
+			attackHitboxes[0].center = new Vector3 (.6f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.DownArrow)) {
 			anim.SetInteger ("direction", 0);
-			attackHitboxes[0].center = new Vector3 (0f, .3f, -.5f);
+			attackHitboxes[0].center = new Vector3 (0f, .3f, -.6f);
 		}
 		if (Input.GetKey(KeyCode.UpArrow)) {
 			anim.SetInteger ("direction", 3);
-			attackHitboxes[0].center = new Vector3 (0f, .3f, .5f);
+			attackHitboxes[0].center = new Vector3 (0f, .3f, .6f);
 		}
 		// check which way he is facing, set idle animation to that one
 		if (!Input.anyKey && !attacking) {
@@ -144,14 +136,4 @@ public class PlayerController : character {
 			print ("Hero has died");
 		}
 	}
-
-//	void OnCollisionEnter(Collision collision) {
-//		if (collision.collider.tag == "Environment") {
-//			print ("Hitting the environment");
-//			canMove = false;
-//		}
-//	}
-//	void OnCollisionExit(Collision collision) {
-//		canMove = true;
-//	}
 }

@@ -1,15 +1,17 @@
 fileFormatVersion: 2
-guid: 1b0604e80182dce4793200ae5db3f3f1
-timeCreated: 1520290783
+guid: 767ade192b82f49d9bb9fa2fa19be0f9
+timeCreated: 1520463493
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: unnamed_0
-    21300002: unnamed_1
-    21300004: unnamed_2
-    21300006: unnamed_3
-    21300008: unnamed_4
-    21300010: unnamed_5
+    21300000: SkeletonBackIdlespritemap_0
+    21300002: SkeletonBackIdlespritemap_1
+    21300004: SkeletonBackIdlespritemap_2
+    21300006: SkeletonBackIdlespritemap_3
+    21300008: SkeletonBackIdlespritemap_4
+    21300010: SkeletonBackIdlespritemap_5
+    21300012: SkeletonBackIdlespritemap_6
+    21300014: SkeletonBackIdlespritemap_7
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -37,7 +39,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -1
     wrapU: 1
@@ -82,11 +84,31 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: unnamed_0
+      name: SkeletonBackIdlespritemap_0
       rect:
         serializedVersion: 2
         x: 0
@@ -100,7 +122,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: unnamed_1
+      name: SkeletonBackIdlespritemap_1
       rect:
         serializedVersion: 2
         x: 256
@@ -114,7 +136,21 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: unnamed_2
+      name: SkeletonBackIdlespritemap_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SkeletonBackIdlespritemap_3
       rect:
         serializedVersion: 2
         x: 0
@@ -128,7 +164,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: unnamed_3
+      name: SkeletonBackIdlespritemap_4
       rect:
         serializedVersion: 2
         x: 256
@@ -142,7 +178,21 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: unnamed_4
+      name: SkeletonBackIdlespritemap_5
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SkeletonBackIdlespritemap_6
       rect:
         serializedVersion: 2
         x: 0
@@ -156,7 +206,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: unnamed_5
+      name: SkeletonBackIdlespritemap_7
       rect:
         serializedVersion: 2
         x: 256
