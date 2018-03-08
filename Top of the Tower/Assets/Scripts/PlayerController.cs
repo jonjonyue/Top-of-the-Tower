@@ -157,6 +157,16 @@ public class PlayerController : character {
 		GetComponent<SpriteRenderer> ().color = Color.white;
 	}
 
+	public void heal(int hpRestored) {
+		if (health + hpRestored > 10)
+			health = 10;
+		else
+			health += hpRestored;
+		
+		healthSlider.value = health;
+		print ("Hero healed " + hpRestored + " damage...");
+	}
+
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);

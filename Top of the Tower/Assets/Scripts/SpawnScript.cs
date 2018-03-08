@@ -10,9 +10,11 @@ public class SpawnScript : MonoBehaviour {
     List<string> itemController;
 	SpriteRenderer spriteRenderer;
 	Animator anim;
-	public Transform spawnPoint;
-    int itemIndex;
+	int itemIndex;
+	BoxCollider col;
+	bool hasBeenUsed = false;
 
+	public Transform spawnPoint;
 	public float amplitude = 0.5f;
 	public float frequency = 1f;
 
@@ -26,6 +28,7 @@ public class SpawnScript : MonoBehaviour {
 
 		spriteRenderer = GetComponent<SpriteRenderer> ();
 		anim = GetComponent<Animator> ();
+		col = GetComponent<BoxCollider> ();
 
         itemString = new List<string>();
         itemController = new List<string>();
@@ -43,6 +46,25 @@ public class SpawnScript : MonoBehaviour {
 		tempPos.y += Mathf.Sin (Time.fixedTime * Mathf.PI * frequency) * amplitude;
 
 		transform.position = tempPos;
+
+		/*
+		 * Pickup functionality
+		 */
+		if (!hasBeenUsed) {
+			Collider[] cols = Physics.OverlapBox (col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask ("Hitbox"));
+
+			foreach (Collider c in cols) {
+				if (c.tag == "Player") {
+					PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
+					player.heal (3);
+					hasBeenUsed = true;
+
+					/* FIXME */
+					// Add to inventory here
+					gameObject.SetActive (false);
+				}
+			}
+		}
     }
 
     void updateItem()

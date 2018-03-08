@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : character {
 
@@ -9,20 +10,19 @@ public class EnemyController : character {
 
 	public Transform heroTransform;
 	public GameObject alert;
+	public GameObject hitbox;
+	public Collider[] attackHitboxes;
 
 	private SpriteRenderer sr;
 	private Animator anim;
-
-	public Collider[] attackHitboxes;
-
-	CharacterController cc;
+	NavMeshAgent agent;
 
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
 		anim = GetComponent<Animator> ();
 		attacking = false;
-		cc = GetComponent<CharacterController> ();
+		agent = GetComponent<NavMeshAgent> ();
 	}
 
 	// Update is called once per frame
@@ -88,9 +88,7 @@ public class EnemyController : character {
 			if (Mathf.Abs(targetVector.magnitude) > 1) {
 				Vector3 unitVector = targetVector / targetVector.magnitude;
 
-				if (!anim.GetCurrentAnimatorStateInfo(0).IsName("BackAttack") && !anim.GetCurrentAnimatorStateInfo(0).IsName("ForwardAttack") && !anim.GetCurrentAnimatorStateInfo(0).IsName("HeroSideAttack")) {
-					cc.Move (speed * Time.deltaTime * unitVector);
-				}
+				agent.SetDestination(heroTransform.position);
 
 				var enemyAngle = Mathf.Atan2 (targetVector.z, targetVector.x) * Mathf.Rad2Deg;
 
@@ -117,11 +115,13 @@ public class EnemyController : character {
 //					attackHitboxes[0].center = new Vector3 (0f, .3f, .6f);
 				}
 			} else if (!attacking) {
+				agent.SetDestination(transform.position);
 				Attack (attackHitboxes[0]);
 			}
 		} else {
 			alert.SetActive (false);
 
+			agent.SetDestination(transform.position);
 			// check which way he is facing, set idle animation to that one
 			if (!attacking) {
 				int currAnim = anim.GetInteger ("direction");
@@ -141,11 +141,15 @@ public class EnemyController : character {
 			health -= damage;
 
 			print (charName + " took " + damage + " damage...");
-			if (health <= 0) {
-				isAlive = false;
-				anim.SetTrigger ("dead");
-				alert.SetActive (false);
-			}
+			if (health <= 0)
+				dead ();
 		}
+	}
+
+	void dead() {
+		isAlive = false;
+		anim.SetTrigger ("dead");
+		alert.SetActive (false);
+		hitbox.SetActive (false);
 	}
 }
