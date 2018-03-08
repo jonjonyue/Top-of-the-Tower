@@ -10,6 +10,7 @@ TagManager:
   - wall1
   - wall3
   - Environment
+  - Trap
   layers:
   - Default
   - TransparentFX
