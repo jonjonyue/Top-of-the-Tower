@@ -137,8 +137,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1255302878562364}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.65, y: 1.1750083, z: -2.55}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.51, y: 1.1750083, z: 2.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000214450021690}
@@ -350,7 +350,7 @@ Animator:
   m_GameObject: {fileID: 1255302878562364}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1cbc855fee4ba407a865b21406318edb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8d78b1e6e00364c5cba8f8b5e83a5811, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -375,7 +375,7 @@ MonoBehaviour:
   speed: 4
   isAlive: 1
   attacking: 0
-  aggroDistance: 6
+  aggroDistance: 8
   heroTransform: {fileID: 0}
   alert: {fileID: 1239707295526636}
   attackHitboxes:
@@ -399,11 +399,11 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1916948506796932}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0.6, y: 0.3, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0.1, y: 0, z: 0}
 --- !u!136 &136930692681653896
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -468,8 +468,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ab360741eccf445d89e48cd4f28f8471, type: 3}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 31033203a16244895bb225e13a2ed6f1, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

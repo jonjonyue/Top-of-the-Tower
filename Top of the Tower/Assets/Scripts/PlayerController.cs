@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : character {
 
@@ -27,9 +29,12 @@ public class PlayerController : character {
 	private SpriteRenderer sr;
 	private Animator anim;
 
-	public SphereCollider[] attackHitboxes;
+	public BoxCollider[] attackHitboxes;
 
 	private CharacterController cc;
+
+	// GUI
+	public Slider healthSlider;
 
 
 	// Use this for initialization
@@ -38,6 +43,7 @@ public class PlayerController : character {
 		anim = GetComponent<Animator> ();
 		cc = GetComponent < CharacterController> ();
 		attacking = false;
+		healthSlider.value = health;
 	}
 	
 	// Update is called once per frame
@@ -46,38 +52,51 @@ public class PlayerController : character {
 		// we should only be able to attack once per press, not continuously
 		if (Input.GetKeyDown(KeyCode.Space)){
 //			print ("calling attack");
-			Attack (attackHitboxes[0]);
+			if (!attacking) 
+				Attack (attackHitboxes[0]);
 		}
 	}
 
 	void Attack(Collider col) {
 		// can't do 2 attacks at once
-		if (!attacking) {
-			// START THE ATTACK!!!
-			attacking = true;
-			Collider[] cols = Physics.OverlapBox (col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask ("Hitbox"));
+		// START THE ATTACK!!!
+		attacking = true;
+		Collider[] cols = Physics.OverlapBox (col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask ("Hitbox"));
 
-			//ATTACK ANIMATION
-			//Note: this depends on the direction (using Triggers)
-			anim.SetTrigger ("attack"); 
+		//ATTACK ANIMATION
+		//Note: this depends on the direction (using Triggers)
+		anim.SetTrigger ("attack"); 
 
-			foreach (Collider c in cols) {
-				if (c.tag == "Enemy") {
-					EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
-					StartCoroutine (damage (enemy));
-				}
-			}
-		}
-		attacking = false;
+		// still wait to attack again if we miss everything
+		StartCoroutine(damage(col));
 	}
 
-	IEnumerator damage(EnemyController Char) {
-		Color originalColor = Char.gameObject.GetComponent<SpriteRenderer> ().color;
-		yield return new WaitForSeconds (.6f);
-		Char.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
-		yield return new WaitForSeconds (.1f);
-		Char.gameObject.GetComponent<SpriteRenderer> ().color = originalColor;
-		Char.takeDamage (2);
+	IEnumerator damage(Collider col) {
+		yield return new WaitForSeconds (.625f);
+
+		// Get the hitboxes hit by the attack
+		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+
+		//ATTACK MECHANICS
+		foreach (Collider c in cols) {
+			if (c.tag == "Enemy") {
+				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
+				enemy.GetComponent<SpriteRenderer> ().color = Color.red;
+			}
+		}
+
+		// Wait before turning white again
+		yield return new WaitForSeconds (.2f);
+
+		foreach (Collider c in cols) {
+			if (c.tag == "Enemy") {
+				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
+				enemy.GetComponent<SpriteRenderer> ().color = Color.white;
+				enemy.takeDamage (2);
+			}
+		}
+		// we are done attacking
+		attacking = false;
 	}
 
 	// Moves the Player (if keys are down)
@@ -130,10 +149,17 @@ public class PlayerController : character {
 
 	override public void takeDamage(int damage) {
 		health -= damage - defense;
-
+		healthSlider.value = health;
 		print ("Hero took " + (damage - defense) + " damage...");
 		if (health <= 0) {
-			print ("Hero has died");
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
+		GetComponent<SpriteRenderer> ().color = Color.white;
+	}
+
+	void OnTriggerEnter(Collider collider) {
+		if (collider.tag == "Respawn") {
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 	}
 }

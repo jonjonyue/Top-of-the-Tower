@@ -13,7 +13,7 @@ public class EnemyController : character {
 	private SpriteRenderer sr;
 	private Animator anim;
 
-	public SphereCollider[] attackHitboxes;
+	public Collider[] attackHitboxes;
 
 	CharacterController cc;
 
@@ -39,30 +39,32 @@ public class EnemyController : character {
 			// START THE ATTACK!!!
 			attacking = true;
 
-			// Get the hitboxes hit by the attack
-			Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+			//ATTACK ANIMATION
+			//Note: this depends on the direction (using Triggers)
+			anim.SetTrigger ("attack");
 
-
-			//ATTACK MECHANICS
-			foreach (Collider c in cols) {
-				if (c.tag == "Player") {
-					//ATTACK ANIMATION
-					//Note: this depends on the direction (using Triggers)
-					anim.SetTrigger ("attack");
-					PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
-					StartCoroutine (damage (player));
-				}
-			}
+			StartCoroutine (damage (col));
 		}
 	}
 
-	IEnumerator damage(PlayerController Char) {
-		Color originalColor = Char.gameObject.GetComponent<SpriteRenderer> ().color;
+	IEnumerator damage(Collider col) {
+		
 		yield return new WaitForSeconds (.625f);
-		Char.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
-		yield return new WaitForSeconds (.2f);
-		Char.gameObject.GetComponent<SpriteRenderer> ().color = originalColor;
-		Char.takeDamage (2);
+
+		// Get the hitboxes hit by the attack
+		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+
+		//ATTACK MECHANICS
+		foreach (Collider c in cols) {
+			if (c.tag == "Player") {
+				PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
+				Color originalColor = player.GetComponent<SpriteRenderer> ().color;
+				player.GetComponent<SpriteRenderer> ().color = Color.red;
+				yield return new WaitForSeconds (.2f);
+				player.GetComponent<SpriteRenderer> ().color = originalColor;
+				player.takeDamage (2);
+			}
+		}
 
 		// we are done attacking
 		attacking = false;
@@ -83,7 +85,6 @@ public class EnemyController : character {
 
 		if (targetVector.magnitude < aggroDistance) {
 			alert.SetActive (true);
-			print (Mathf.Abs(targetVector.magnitude));
 			if (Mathf.Abs(targetVector.magnitude) > 1) {
 				Vector3 unitVector = targetVector / targetVector.magnitude;
 
@@ -100,20 +101,20 @@ public class EnemyController : character {
 					sr.flipX = false;
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 1);
-					attackHitboxes[0].center = new Vector3 (.6f, .3f, 0f);
+//					attackHitboxes[0].center = new Vector3 (.6f, .3f, 0f);
 				} else if (enemyAngle >= 135f && enemyAngle < 225f) { /* Left */
 					sr.flipX = true;
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 1);
-					attackHitboxes[0].center = new Vector3 (-.6f, .3f, 0f);
+//					attackHitboxes[0].center = new Vector3 (-.6f, .3f, 0f);
 				} else if (enemyAngle >= 45f && enemyAngle < 135f) { /* Up */
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 3);
-					attackHitboxes[0].center = new Vector3 (0f, .3f, -.6f);
+//					attackHitboxes[0].center = new Vector3 (0f, .3f, -.6f);
 				} else if (enemyAngle >= 225f && enemyAngle < 315f) { /* Down */
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 0);
-					attackHitboxes[0].center = new Vector3 (0f, .3f, .6f);
+//					attackHitboxes[0].center = new Vector3 (0f, .3f, .6f);
 				}
 			} else if (!attacking) {
 				Attack (attackHitboxes[0]);
