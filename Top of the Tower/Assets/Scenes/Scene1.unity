@@ -1369,6 +1369,26 @@ Prefab:
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 163617207}
+    - target: {fileID: 20281749907398700, guid: e67325c544c5a422a8d3d9b50f11c5c8,
+        type: 2}
+      propertyPath: near clip plane
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 20281749907398700, guid: e67325c544c5a422a8d3d9b50f11c5c8,
+        type: 2}
+      propertyPath: field of view
+      value: 62
+      objectReference: {fileID: 0}
+    - target: {fileID: 20281749907398700, guid: e67325c544c5a422a8d3d9b50f11c5c8,
+        type: 2}
+      propertyPath: orthographic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 20281749907398700, guid: e67325c544c5a422a8d3d9b50f11c5c8,
+        type: 2}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e67325c544c5a422a8d3d9b50f11c5c8, type: 2}
   m_IsPrefabParent: 0
@@ -1765,8 +1785,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 698175723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.58, y: 4.45, z: -24.53}
-  m_LocalScale: {x: 5, y: 1.0816042, z: 1}
+  m_LocalPosition: {x: -18.71, y: 4.45, z: -24.53}
+  m_LocalScale: {x: 3.355593, y: 1.0816042, z: 1}
   m_Children: []
   m_Father: {fileID: 520619246}
   m_RootOrder: 54
@@ -3438,8 +3458,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1312128602}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 25, y: 5, z: 0}
-  m_LocalScale: {x: 50, y: 10, z: 1}
+  m_LocalPosition: {x: 25, y: 2.5, z: 0}
+  m_LocalScale: {x: 50, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 520619246}
   m_RootOrder: 1
