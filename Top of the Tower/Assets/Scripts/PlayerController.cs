@@ -72,7 +72,7 @@ public class PlayerController : character {
 	}
 
 	IEnumerator damage(Collider col) {
-		yield return new WaitForSeconds (.625f);
+		yield return new WaitForSeconds (.05f);
 
 		// Get the hitboxes hit by the attack
 		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
@@ -158,8 +158,8 @@ public class PlayerController : character {
 	}
 
 	public void heal(int hpRestored) {
-		if (health + hpRestored > 10)
-			health = 10;
+		if (health + hpRestored > 30)
+			health = 30;
 		else
 			health += hpRestored;
 		

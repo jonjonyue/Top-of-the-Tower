@@ -56,7 +56,7 @@ public class SpawnScript : MonoBehaviour {
 			foreach (Collider c in cols) {
 				if (c.tag == "Player") {
 					PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
-					player.heal (3);
+					player.heal (7);
 					hasBeenUsed = true;
 
 					/* FIXME */
