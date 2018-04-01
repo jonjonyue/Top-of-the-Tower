@@ -33,9 +33,6 @@ public class PlayerController : character {
 
 	private CharacterController cc;
 
-	// GUI
-	public Slider healthSlider;
-
 
 	// Use this for initialization
 	void Start () {
@@ -150,7 +147,7 @@ public class PlayerController : character {
 	override public void takeDamage(int damage) {
 		health -= damage - defense;
 		healthSlider.value = health;
-		print ("Hero took " + (damage - defense) + " damage...");
+		//print ("Hero took " + (damage - defense) + " damage...");
 		if (health <= 0) {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}

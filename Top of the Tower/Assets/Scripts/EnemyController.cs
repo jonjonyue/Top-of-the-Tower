@@ -23,6 +23,10 @@ public class EnemyController : character {
 		anim = GetComponent<Animator> ();
 		attacking = false;
 		agent = GetComponent<NavMeshAgent> ();
+
+        //health bar setup
+        healthSlider.maxValue = health;
+        healthSlider.value = health;
 	}
 
 	// Update is called once per frame
@@ -47,9 +51,9 @@ public class EnemyController : character {
 		}
 	}
 
-	IEnumerator damage(Collider col) {
+	public virtual IEnumerator damage(Collider col) {
 		
-		yield return new WaitForSeconds (.625f);
+		yield return new WaitForSeconds (0f);
 
 		// Get the hitboxes hit by the attack
 		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
@@ -57,12 +61,15 @@ public class EnemyController : character {
 		//ATTACK MECHANICS
 		foreach (Collider c in cols) {
 			if (c.tag == "Player") {
-				PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
-				Color originalColor = player.GetComponent<SpriteRenderer> ().color;
-				player.GetComponent<SpriteRenderer> ().color = Color.red;
-				yield return new WaitForSeconds (.2f);
-				player.GetComponent<SpriteRenderer> ().color = originalColor;
-				player.takeDamage (2);
+                if (isAlive)
+                {
+                    PlayerController player = c.gameObject.GetComponentInParent<PlayerController>();
+                    Color originalColor = player.GetComponent<SpriteRenderer>().color;
+                    player.GetComponent<SpriteRenderer>().color = Color.red;
+                    yield return new WaitForSeconds(.2f);
+                    player.GetComponent<SpriteRenderer>().color = originalColor;
+                    player.takeDamage(2);
+                }
 			}
 		}
 
@@ -99,20 +106,16 @@ public class EnemyController : character {
 					sr.flipX = false;
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 1);
-//					attackHitboxes[0].center = new Vector3 (.6f, .3f, 0f);
 				} else if (enemyAngle >= 135f && enemyAngle < 225f) { /* Left */
 					sr.flipX = true;
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 1);
-//					attackHitboxes[0].center = new Vector3 (-.6f, .3f, 0f);
 				} else if (enemyAngle >= 45f && enemyAngle < 135f) { /* Up */
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 3);
-//					attackHitboxes[0].center = new Vector3 (0f, .3f, -.6f);
 				} else if (enemyAngle >= 225f && enemyAngle < 315f) { /* Down */
 					anim.SetBool ("idle", false);
 					anim.SetInteger ("direction", 0);
-//					attackHitboxes[0].center = new Vector3 (0f, .3f, .6f);
 				}
 			} else if (!attacking) {
 				agent.SetDestination(transform.position);
@@ -139,8 +142,8 @@ public class EnemyController : character {
 	override public void takeDamage(int damage) {
 		if (isAlive) {
 			health -= damage;
-
-			print (charName + " took " + damage + " damage...");
+            healthSlider.value = health;
+			//print (charName + " took " + damage + " damage...");
 			if (health <= 0)
 				dead ();
 		}
@@ -151,5 +154,6 @@ public class EnemyController : character {
 		anim.SetTrigger ("dead");
 		alert.SetActive (false);
 		hitbox.SetActive (false);
+        healthSlider.gameObject.SetActive(false);
 	}
 }

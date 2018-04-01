@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class character : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class character : MonoBehaviour
 	// Code variables
 	public bool isAlive = true;
 	public bool attacking = false;
+
+    // GUI
+    public Slider healthSlider;
 
 	// Colliders
 //	public GameObject attackCollider;
