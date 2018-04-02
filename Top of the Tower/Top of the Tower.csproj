@@ -282,13 +282,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\dispHP.cs" />
-    <Compile Include="Assets\dispSlayed.cs" />
-    <Compile Include="Assets\dispTime.cs" />
-    <Compile Include="Assets\fetchStatus.cs" />
     <Compile Include="Assets\Scripts\character.cs" />
     <Compile Include="Assets\Scripts\ContinueControl.cs" />
+    <Compile Include="Assets\Scripts\dispHP.cs" />
+    <Compile Include="Assets\Scripts\dispSlayed.cs" />
+    <Compile Include="Assets\Scripts\dispTime.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\fetchStatus.cs" />
     <Compile Include="Assets\Scripts\PauseControl.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\QuitControl.cs" />
