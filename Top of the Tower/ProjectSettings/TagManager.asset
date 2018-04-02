@@ -10,6 +10,8 @@ TagManager:
   - wall1
   - wall3
   - Environment
+  - HiddenDoor
+  - button
   layers:
   - Default
   - TransparentFX

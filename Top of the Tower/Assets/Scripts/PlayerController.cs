@@ -26,6 +26,7 @@ public class PlayerController : character {
 
 	// Player Specific stats
 	public int mana;
+	public int maxHealth;
 	private SpriteRenderer sr;
 	private Animator anim;
 
@@ -41,6 +42,7 @@ public class PlayerController : character {
 		cc = GetComponent < CharacterController> ();
 		attacking = false;
 		healthSlider.value = health;
+		maxHealth = health;
 	}
 	
 	// Update is called once per frame
@@ -155,8 +157,8 @@ public class PlayerController : character {
 	}
 
 	public void heal(int hpRestored) {
-		if (health + hpRestored > 30)
-			health = 30;
+		if (health + hpRestored > maxHealth)
+			health = maxHealth;
 		else
 			health += hpRestored;
 		
@@ -166,7 +168,14 @@ public class PlayerController : character {
 
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "Respawn") {
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			//SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			maxHealth += 20;
+			health = maxHealth;
+			healthSlider.value = health;
+			Vector3 move = new Vector3(43.34f, .91f, -106.46f);
+			cc.transform.position = move;
+			//43.34, .91, -106.46
+			//-31.96, .91, -4.86
 		}
 	}
 }
