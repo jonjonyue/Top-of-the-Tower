@@ -5,7 +5,7 @@ using UnityEngine;
 public class TrapCollision : MonoBehaviour
 {
     public GameObject Boulder;
-   public GameObject TrapNeedle;
+    public GameObject TrapNeedle;
     public Collider col;
     public PlayerController pc;
     public bool trapActivate;
@@ -25,10 +25,11 @@ public class TrapCollision : MonoBehaviour
         needleMR.enabled = false;
     }
 
-   /* private void Update()
+   private void Update()
     {
         
-        Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+        Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox")); //colliders in green box
+        
 
         foreach (Collider c in cols)
         {
@@ -51,7 +52,7 @@ public class TrapCollision : MonoBehaviour
             //count++;
             
         }
-    } */
+    } 
     private void OnCollisionEnter(Collision col)
     {
         if ((col.gameObject.tag == "Player") && (count < 1))
