@@ -12,6 +12,7 @@ TagManager:
   - Environment
   - HiddenDoor
   - button
+  - NextLevel
   layers:
   - Default
   - TransparentFX

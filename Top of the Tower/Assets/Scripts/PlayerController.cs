@@ -167,7 +167,7 @@ public class PlayerController : character {
 	}
 
 	void OnTriggerEnter(Collider collider) {
-		if (collider.tag == "Respawn") {
+		if (collider.tag == "NextLevel") {
 			//SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			maxHealth += 20;
 			health = maxHealth;
@@ -176,6 +176,9 @@ public class PlayerController : character {
 			cc.transform.position = move;
 			//43.34, .91, -106.46
 			//-31.96, .91, -4.86
+		}
+		if (collider.tag == "Respawn") {
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 	}
 }
