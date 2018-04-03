@@ -176,6 +176,7 @@ public class PlayerController : character {
 			cc.transform.position = move;
 			//43.34, .91, -106.46
 			//-31.96, .91, -4.86
+			Move();
 		}
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
