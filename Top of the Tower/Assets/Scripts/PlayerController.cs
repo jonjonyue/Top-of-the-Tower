@@ -26,7 +26,7 @@ public class PlayerController : character {
 
 	// Player Specific stats
 	public int mana;
-	public int maxHealth;
+	private int maxHealth;
 	private SpriteRenderer sr;
 	private Animator anim;
 
@@ -60,7 +60,6 @@ public class PlayerController : character {
 		// can't do 2 attacks at once
 		// START THE ATTACK!!!
 		attacking = true;
-		Collider[] cols = Physics.OverlapBox (col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask ("Hitbox"));
 
 		//ATTACK ANIMATION
 		//Note: this depends on the direction (using Triggers)
@@ -80,7 +79,8 @@ public class PlayerController : character {
 		foreach (Collider c in cols) {
 			if (c.tag == "Enemy") {
 				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
-				enemy.GetComponent<SpriteRenderer> ().color = Color.red;
+                enemy.GetComponent<SpriteRenderer> ().color = Color.red;
+                enemy.takeCombatDamage(strength);
 			}
 		}
 
@@ -91,9 +91,11 @@ public class PlayerController : character {
 			if (c.tag == "Enemy") {
 				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
 				enemy.GetComponent<SpriteRenderer> ().color = Color.white;
-				enemy.takeDamage (2);
 			}
 		}
+
+        yield return new WaitForSeconds(.41f);
+
 		// we are done attacking
 		attacking = false;
 	}
@@ -147,7 +149,7 @@ public class PlayerController : character {
 	}
 
 	override public void takeDamage(int damage) {
-		health -= damage - defense;
+		health -= damage;
 		healthSlider.value = health;
 		//print ("Hero took " + (damage - defense) + " damage...");
 		if (health <= 0) {
@@ -155,6 +157,17 @@ public class PlayerController : character {
 		}
 		GetComponent<SpriteRenderer> ().color = Color.white;
 	}
+
+    override public void takeCombatDamage(int damage) {
+        health -= damage - defense;
+        healthSlider.value = health;
+        //print ("Hero took " + (damage - defense) + " damage...");
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
 
 	public void heal(int hpRestored) {
 		if (health + hpRestored > maxHealth)
@@ -168,15 +181,13 @@ public class PlayerController : character {
 
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "NextLevel") {
-			//SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			maxHealth += 20;
-			health = maxHealth;
-			healthSlider.value = health;
+            healthSlider.maxValue += 20;
+            heal(20);
 			Vector3 move = new Vector3(43.34f, .91f, -106.46f);
-			cc.transform.position = move;
+            cc.gameObject.transform.position = move;
 			//43.34, .91, -106.46
 			//-31.96, .91, -4.86
-			Move();
 		}
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);

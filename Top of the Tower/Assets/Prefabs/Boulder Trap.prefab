@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 33250396404470318}
   - component: {fileID: 65432042345196208}
   - component: {fileID: 23373633415606750}
-  - component: {fileID: 114885857712150096}
+  - component: {fileID: 114322119898079858}
   m_Layer: 0
   m_Name: Trap
   m_TagString: Untagged
@@ -117,7 +117,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1769500758814008}
   m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 15.485638, y: -0.1, z: 2.7577162}
+  m_LocalPosition: {x: 14.01, y: -0.1, z: -1.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4630603019895198}
@@ -299,7 +299,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114885857712150096
+--- !u!114 &114322119898079858
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -307,12 +307,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1789986992371054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9d89fab521d04ae3910475137a7979c, type: 3}
+  m_Script: {fileID: 11500000, guid: f916e64159ebb4f74a45f1decd510886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boulder: {fileID: 1472356766288302}
   col: {fileID: 65883232672607076}
   pc: {fileID: 0}
+  damage: 3
+  boulder: {fileID: 1472356766288302}
+  glow: {fileID: 1369444080164652}
 --- !u!122 &122166089864464502
 Halo:
   m_ObjectHideFlags: 1

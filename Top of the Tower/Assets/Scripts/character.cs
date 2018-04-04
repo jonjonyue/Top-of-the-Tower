@@ -10,10 +10,11 @@ public class character : MonoBehaviour
 	// Informational
 	public string charName;
 
-	// General Stats
+    [Header("Stats")]
 	public int health;
 	public int defense;
 	public int speed;
+    public int strength;
 
 	// Code variables
 	public bool isAlive = true;
@@ -22,25 +23,25 @@ public class character : MonoBehaviour
     // GUI
     public Slider healthSlider;
 
-	// Colliders
-//	public GameObject attackCollider;
-
-//	public IEnumerator damage(character Char) {
-//		Color originalColor = Char.gameObject.GetComponent<SpriteRenderer> ().color;
-//		yield return new WaitForSeconds (.4f);
-//		Char.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
-//		yield return new WaitForSeconds (.1f);
-//		Char.gameObject.GetComponent<SpriteRenderer> ().color = originalColor;
-//		Char.takeDamage (2);
-//	}
-
 	virtual public void takeDamage(int damage) {
 		health -= damage;
 
-		print (gameObject.name + " taking " + damage + " damage.");
+        Debug.Log (gameObject.name + " taking " + damage + " damage.");
 		if (health <= 0) {
 			Destroy (gameObject);
 		}
 	}
+
+    virtual public void takeCombatDamage(int damage) {
+        damage -= defense;
+        if (damage < 0)
+            health -= damage;
+
+        Debug.Log(gameObject.name + " taking " + damage + " damage.");
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
 
