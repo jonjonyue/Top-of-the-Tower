@@ -1,0 +1,20 @@
+﻿<Properties StartupConfiguration="{27317A66-3987-9C1B-2115-EB0C0877544D}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CameraClip.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Traps/TrapBase.cs" Line="23" Column="9" />
+      <File FileName="Assets/Scripts/Traps/BoulderTrap.cs" Line="17" Column="25" />
+      <File FileName="Assets/Scripts/Traps/SawTrap.cs" Line="33" Column="32" />
+      <File FileName="Assets/Scripts/character.cs" Line="13" Column="22" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="98" Column="9" />
+      <File FileName="Assets/Scripts/Enemies/EnemyController.cs" Line="161" Column="21" />
+      <File FileName="Assets/Scripts/CameraClip.cs" Line="31" Column="22" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Top_220of_220the_220Tower PreferredExecutionTarget="Unity.Editor" />
+  <MultiItemStartupConfigurations />
+</Properties>

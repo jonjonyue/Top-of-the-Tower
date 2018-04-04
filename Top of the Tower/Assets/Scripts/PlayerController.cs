@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : character {
 
@@ -24,15 +26,23 @@ public class PlayerController : character {
 
 	// Player Specific stats
 	public int mana;
+	private int maxHealth;
 	private SpriteRenderer sr;
 	private Animator anim;
-	private bool attacking;
-	List<GameObject> nearEnemy = new List<GameObject>();
+
+	public BoxCollider[] attackHitboxes;
+
+	private CharacterController cc;
+
+
 	// Use this for initialization
 	void Start () {
 		sr = GetComponent<SpriteRenderer> ();
 		anim = GetComponent<Animator> ();
+		cc = GetComponent < CharacterController> ();
 		attacking = false;
+		healthSlider.value = health;
+		maxHealth = health;
 	}
 	
 	// Update is called once per frame
@@ -40,8 +50,9 @@ public class PlayerController : character {
 		Move ();
 		// we should only be able to attack once per press, not continuously
 		if (Input.GetKeyDown(KeyCode.Space)){
-			print ("calling attack");
-			StartCoroutine(Attack ());
+//			print ("calling attack");
+			if (!attacking) 
+				Attack (attackHitboxes[0]);
 		}
 	}
 
@@ -50,54 +61,45 @@ public class PlayerController : character {
     {
         return killed;
     }
-
-    void OnTriggerEnter(Collider col)
-	{
-		if (col.gameObject.tag == "Enemy") {
-			nearEnemy.Add(col.gameObject);
-		}
-	}
-	void OnTriggerExit(Collider col)
-	{
-		if (col.gameObject.tag == "Enemy") {
-			nearEnemy.Remove(col.gameObject);
-		}
-	}
-
-	IEnumerator Attack() {
+    void Attack(Collider col) {
 		// can't do 2 attacks at once
-		print("entering attack function");
-		if (attacking) {
-			yield return new WaitForSeconds (0f);
-		}
 		// START THE ATTACK!!!
 		attacking = true;
 
 		//ATTACK ANIMATION
 		//Note: this depends on the direction (using Triggers)
-		anim.SetTrigger("attack"); 
+		anim.SetTrigger ("attack"); 
+
+		// still wait to attack again if we miss everything
+		StartCoroutine(damage(col));
+	}
+
+	IEnumerator damage(Collider col) {
+		yield return new WaitForSeconds (.05f);
+
+		// Get the hitboxes hit by the attack
+		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
 		//ATTACK MECHANICS
-		//put your code here @Eric
-		var colors = new Color[2];
-
-		Vector3 pos = transform.position;
-		for(int i = 0; i < nearEnemy.Count;i++)
-		{
-			int damage = 2;
-			colors [1] = nearEnemy[i].GetComponent<Renderer>().material.color;
-			colors [0] = Color.red;
-			Vector3 vec = nearEnemy[i].transform.position;
-			Vector3 direction = vec - pos;
-			if(Vector3.Dot(direction, transform.forward)<0.7){
-				print("attacking");
-				character cha = (character)nearEnemy[i].GetComponent<character> ();
-				cha.health -= damage;
-				nearEnemy[i].GetComponent<Renderer>().material.color = colors[0];
-				yield return new WaitForSeconds(0.25f);
-				nearEnemy[i].GetComponent<Renderer>().material.color = colors[1];
+		foreach (Collider c in cols) {
+			if (c.tag == "Enemy") {
+				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
+                enemy.GetComponent<SpriteRenderer> ().color = Color.red;
+                enemy.takeCombatDamage(strength);
 			}
 		}
+
+		// Wait before turning white again
+		yield return new WaitForSeconds (.2f);
+
+		foreach (Collider c in cols) {
+			if (c.tag == "Enemy") {
+				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
+				enemy.GetComponent<SpriteRenderer> ().color = Color.white;
+			}
+		}
+
+        yield return new WaitForSeconds(.41f);
 
 		// we are done attacking
 		attacking = false;
@@ -114,35 +116,27 @@ public class PlayerController : character {
 		// 2 - forward idle 
 		// 3 - back walk
 		// 4 - back idle
+
+		Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		cc.Move(move * Time.deltaTime * speed);
+
 		if (Input.GetKey(KeyCode.LeftArrow)) {
-			Vector3 position = this.transform.position;
-			position.x -= speed * Time.deltaTime;
-			this.transform.position = position;
 			sr.flipX = true;
 			anim.SetInteger ("direction", 1);
-			this.GetComponent<SphereCollider> ().center = new Vector3 (-.5f, .3f, 0f);
+			attackHitboxes[0].center = new Vector3 (-.6f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.RightArrow)) {
-			Vector3 position = this.transform.position;
-			position.x += speed * Time.deltaTime;
-			this.transform.position = position;
 			sr.flipX = false;
 			anim.SetInteger ("direction", 1);
-			this.GetComponent<SphereCollider> ().center = new Vector3 (.6f, .3f, 0f);
+			attackHitboxes[0].center = new Vector3 (.6f, .3f, 0f);
 		}
 		if (Input.GetKey(KeyCode.DownArrow)) {
-			Vector3 position = this.transform.position;
-			position.z -= speed * Time.deltaTime;
-			this.transform.position = position;
 			anim.SetInteger ("direction", 0);
-			this.GetComponent<SphereCollider> ().center = new Vector3 (.4f, .5f, 0f);
+			attackHitboxes[0].center = new Vector3 (0f, .3f, -.6f);
 		}
 		if (Input.GetKey(KeyCode.UpArrow)) {
-			Vector3 position = this.transform.position;
-			position.z+= speed*Time.deltaTime;
-			this.transform.position = position;
 			anim.SetInteger ("direction", 3);
-			this.GetComponent<SphereCollider> ().center = new Vector3 (-.4f, .5f, 0f);
+			attackHitboxes[0].center = new Vector3 (0f, .3f, .6f);
 		}
 		// check which way he is facing, set idle animation to that one
 		if (!Input.anyKey && !attacking) {
@@ -158,5 +152,50 @@ public class PlayerController : character {
 
 		}
 	}
+
+	override public void takeDamage(int damage) {
+		health -= damage;
+		healthSlider.value = health;
+		//print ("Hero took " + (damage - defense) + " damage...");
+		if (health <= 0) {
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
+		GetComponent<SpriteRenderer> ().color = Color.white;
+	}
+
+    override public void takeCombatDamage(int damage) {
+        health -= damage - defense;
+        healthSlider.value = health;
+        //print ("Hero took " + (damage - defense) + " damage...");
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+	public void heal(int hpRestored) {
+		if (health + hpRestored > maxHealth)
+			health = maxHealth;
+		else
+			health += hpRestored;
 		
+		healthSlider.value = health;
+		print ("Hero healed " + hpRestored + " damage...");
+	}
+
+	void OnTriggerEnter(Collider collider) {
+		if (collider.tag == "NextLevel") {
+			maxHealth += 20;
+            healthSlider.maxValue += 20;
+            heal(20);
+			Vector3 move = new Vector3(43.34f, .91f, -106.46f);
+            cc.gameObject.transform.position = move;
+			//43.34, .91, -106.46
+			//-31.96, .91, -4.86
+		}
+		if (collider.tag == "Respawn") {
+			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		}
+	}
 }

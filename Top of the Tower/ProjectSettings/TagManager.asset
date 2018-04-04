@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy
+  - EnemyAttack
+  - PlayerAttack
+  - wall1
+  - wall3
+  - Environment
+  - HiddenDoor
+  - button
+  - NextLevel
   layers:
   - Default
   - TransparentFX
@@ -13,9 +22,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Hitbox
+  - Item
+  - Environment
   - 
   - 
   - 
