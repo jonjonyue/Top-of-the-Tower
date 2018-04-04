@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 49b99d88b2c2a4d8b958c3308e3976a5
+=======
+guid: 005a0de3274a4481a8161fd0fb8809a0
+>>>>>>> origin/adrien
 timeCreated: 1519744370
 licenseType: Free
 TextureImporter:
