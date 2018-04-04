@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 20281749907398700}
   - component: {fileID: 124405740014315708}
   - component: {fileID: 81139057181558868}
+  - component: {fileID: 65050059973618292}
+  - component: {fileID: 114407588571534990}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -138,7 +140,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1126342018070666}
   m_LocalRotation: {x: 0.380131, y: -0, z: -0, w: 0.92493266}
-  m_LocalPosition: {x: -0.19000006, y: 6.74, z: -6.46}
+  m_LocalPosition: {x: 0, y: 6.74, z: -6.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4935341022446914}
@@ -164,7 +166,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1460591449994910}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.91, z: 0}
+  m_LocalPosition: {x: -2.65, y: 0.91, z: 1.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4695256798050858}
@@ -270,6 +272,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 1.65, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65050059973618292
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126342018070666}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 2}
+  m_Center: {x: 0, y: 0, z: 7}
 --- !u!65 &65343674893848496
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -327,6 +341,17 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114407588571534990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126342018070666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b5b8308a09d4480b27e4ac1b5c88fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114425788530353978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -342,6 +367,7 @@ MonoBehaviour:
   health: 30
   defense: 1
   speed: 5
+  strength: 2
   isAlive: 1
   attacking: 0
   healthSlider: {fileID: 0}
@@ -462,7 +488,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.44, y: 1.76}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -61,6 +61,7 @@ public class PlayerController : character {
     {
         return killed;
     }
+
     void Attack(Collider col) {
 		// can't do 2 attacks at once
 		// START THE ATTACK!!!
