@@ -22,6 +22,7 @@ public class character : MonoBehaviour
 
     // GUI
     public Slider healthSlider;
+    public GameObject damageNumber;
 
     protected static int killed = 0;
 

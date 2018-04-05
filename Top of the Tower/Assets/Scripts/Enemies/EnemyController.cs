@@ -69,13 +69,14 @@ public class EnemyController : character {
 			//ATTACK ANIMATION
 			//Note: this depends on the direction (using Triggers)
 			anim.SetTrigger ("attack");
-            StartCoroutine(wait());
-			StartCoroutine (damage (col));
+            StartCoroutine(wait(col));
 		}
 	}
 
-    IEnumerator wait() {
-        yield return new WaitForSeconds(Random.Range(0,.5f));
+    IEnumerator wait(Collider col) {
+        yield return new WaitForSeconds(Random.Range(.2f,.5f));
+
+        StartCoroutine(damage(col));
     }
 
 	public virtual IEnumerator damage(Collider col) {

@@ -56,7 +56,7 @@ public class PlayerController : character {
 		}
 	}
 
-    // return how many enermies killed so faar
+    // return how many enemies killed so faar
     public int slayed()
     {
         return killed;
@@ -87,6 +87,7 @@ public class PlayerController : character {
 				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
                 enemy.GetComponent<SpriteRenderer> ().color = Color.red;
                 enemy.takeCombatDamage(strength);
+                var clone = Instantiate(damageNumber, enemy.transform.position + new Vector3(0,1,0), Quaternion.Euler(Vector3.zero));
 			}
 		}
 
@@ -197,7 +198,7 @@ public class PlayerController : character {
     void respawn() {
         maxHealth += 20;
         healthSlider.maxValue += 20;
-        health = maxHealth;
+        heal(maxHealth - health);
         Vector3 move = new Vector3(43.34f, .91f, -106.46f);
         cc.gameObject.transform.position = move;
         //43.34, .91, -106.46

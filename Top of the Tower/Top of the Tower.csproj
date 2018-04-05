@@ -345,6 +345,8 @@
     <Compile Include="Assets\Scripts\Traps\BoulderTrap.cs" />
     <Compile Include="Assets\Scripts\Traps\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Traps\TrapBase.cs" />
+    <Compile Include="Assets\Scripts\DestroyOverTime.cs" />
+    <Compile Include="Assets\Scripts\FloatingText.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scenes\ReadMe-HowToMerge.txt" />
