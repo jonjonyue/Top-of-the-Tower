@@ -11,8 +11,12 @@ public class TrapBase : MonoBehaviour
 
 	private void Start()
 	{
-        pc = GameObject.Find("Hero").GetComponent<PlayerController>();
+        initialize();
 	}
+
+    public void initialize() {
+        pc = GameObject.Find("Hero").GetComponent<PlayerController>();
+    }
 
 	private void Update()
     {

@@ -9,6 +9,7 @@ public class BoulderTrap : TrapBase {
 
 	// Use this for initialization
 	void Start () {
+        initialize();
         boulder.SetActive(false);
         glow.SetActive(true);
 	}

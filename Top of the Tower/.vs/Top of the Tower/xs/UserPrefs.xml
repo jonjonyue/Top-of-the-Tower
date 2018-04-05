@@ -1,11 +1,13 @@
 ﻿<Properties StartupConfiguration="{27317A66-3987-9C1B-2115-EB0C0877544D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/MenuManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Traps/BoulderTrap.cs">
     <Files>
       <File FileName="Assets/Scripts/character.cs" Line="13" Column="22" />
       <File FileName="Assets/Scripts/PlayerController.cs" Line="60" Column="20" />
       <File FileName="Assets/Scripts/Enemies/EnemyController.cs" Line="73" Column="17" />
       <File FileName="Assets/Scripts/Traps/SawTrap.cs" Line="18" Column="110" />
-      <File FileName="Assets/MenuManager.cs" Line="7" Column="10" />
+      <File FileName="Assets/MenuManager.cs" Line="33" Column="21" />
+      <File FileName="Assets/Scripts/Traps/BoulderTrap.cs" Line="11" Column="17" />
+      <File FileName="Assets/Scripts/Traps/TrapBase.cs" Line="23" Column="9" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
