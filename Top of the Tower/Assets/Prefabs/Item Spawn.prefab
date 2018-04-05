@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1891923350198322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.04, y: 1, z: 0}
+  m_LocalPosition: {x: -0, y: 1, z: -26.2}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,8 +84,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca3c0fa61add44708081649d8693ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 1b0604e80182dce4793200ae5db3f3f1, type: 3}
+  rac: {fileID: 9100000, guid: e039eb2d26b5cdc438231e75d639131e, type: 2}
   spawnPoint: {fileID: 4269011985081646}
-  amplitude: 0.4
+  amplitude: 0.5
   frequency: 1
 --- !u!122 &122601077980133374
 Halo:

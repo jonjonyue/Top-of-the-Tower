@@ -332,13 +332,13 @@
     <Compile Include="Assets\DungeonTraps copy\sawCollision.cs" />
     <Compile Include="Assets\DungeonTraps copy\trapCollis.cs" />
     <Compile Include="Assets\DungeonTraps copy\Trapthing.cs" />
-    <Compile Include="Assets\MenuManager.cs" />
     <Compile Include="Assets\Scripts\CameraClip.cs" />
     <Compile Include="Assets\Scripts\character.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemies\Skeleton.cs" />
     <Compile Include="Assets\Scripts\Enemies\Zombie.cs" />
     <Compile Include="Assets\Scripts\hiddenDoor.cs" />
+    <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\PauseControl.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SpawnScript.cs" />

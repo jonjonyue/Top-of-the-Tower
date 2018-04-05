@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+//using UnityEditor;
 
 public class SpawnScript : MonoBehaviour {
 
     GameObject item;
-    List<string> itemString;
-    List<string> itemController;
+    public Sprite sprite;
+    public RuntimeAnimatorController rac;
+    //List<string> itemString;
+    //List<string> itemController;
 	SpriteRenderer spriteRenderer;
 	Animator anim;
-	int itemIndex;
+	//int itemIndex;
 	BoxCollider col;
 	bool hasBeenUsed = false;
 
@@ -30,11 +32,11 @@ public class SpawnScript : MonoBehaviour {
 		anim = GetComponent<Animator> ();
 		col = GetComponent<BoxCollider> ();
 
-        itemString = new List<string>();
-        itemController = new List<string>();
-        itemString.Add("items/Banana/banana.png");
+        //itemString = new List<string>();
+        //itemController = new List<string>();
+        //itemString.Add("items/Banana/banana.png");
 
-        itemController.Add("items/Banana/banana_0.controller");
+        //itemController.Add("items/Banana/banana_0.controller");
 
         updateItem();
     }
@@ -69,8 +71,10 @@ public class SpawnScript : MonoBehaviour {
 
     void updateItem()
     {
-        itemIndex = Random.Range(0, 0);
-		spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath("Assets/" + itemString[itemIndex], typeof(Sprite)) as Sprite;
-        anim.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath("Assets/" + itemController[itemIndex], typeof(RuntimeAnimatorController)) as RuntimeAnimatorController;
+        //itemIndex = Random.Range(0, 0);
+        //spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath("Assets/" + itemString[itemIndex], typeof(Sprite)) as Sprite;
+        //anim.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath("Assets/" + itemController[itemIndex], typeof(RuntimeAnimatorController)) as RuntimeAnimatorController;
+        spriteRenderer.sprite = sprite;
+        anim.runtimeAnimatorController = rac;
     }
 }
