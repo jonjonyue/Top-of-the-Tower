@@ -187,16 +187,20 @@ public class PlayerController : character {
 
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "NextLevel") {
-			maxHealth += 20;
-            healthSlider.maxValue += 20;
-            heal(20);
-			Vector3 move = new Vector3(43.34f, .91f, -106.46f);
-            cc.gameObject.transform.position = move;
-			//43.34, .91, -106.46
-			//-31.96, .91, -4.86
+            respawn();
 		}
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 	}
+
+    void respawn() {
+        maxHealth += 20;
+        healthSlider.maxValue += 20;
+        health = maxHealth;
+        Vector3 move = new Vector3(43.34f, .91f, -106.46f);
+        cc.gameObject.transform.position = move;
+        //43.34, .91, -106.46
+        //-31.96, .91, -4.86
+    }
 }

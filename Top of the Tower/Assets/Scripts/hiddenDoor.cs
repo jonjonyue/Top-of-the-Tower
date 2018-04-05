@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class hiddenDoor : MonoBehaviour {
 
-	public GameObject button;
-	public GameObject hDoor;
+	private GameObject button;
+	private GameObject hDoor;
 	//public Collider col;
 	//public PlayerController pc;
 	bool activated = false;
@@ -25,8 +25,9 @@ public class hiddenDoor : MonoBehaviour {
 
 	private void TouchObj(){
 		if (activated) {
-			hDoor.GetComponent<Renderer> ().enabled = !hDoor.GetComponent<Renderer> ().enabled;
-			hDoor.GetComponent<Collider> ().enabled = !hDoor.GetComponent<Collider> ().enabled;
+            //hDoor.GetComponent<Renderer> ().enabled = !hDoor.GetComponent<Renderer> ().enabled;
+            //hDoor.GetComponent<Collider> ().enabled = !hDoor.GetComponent<Collider> ().enabled;
+            hDoor.transform.Translate(new Vector3(0, 4.5f, 0));
 			activated = false;
 		}
 	}
