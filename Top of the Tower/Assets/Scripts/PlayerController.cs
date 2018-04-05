@@ -188,10 +188,15 @@ public class PlayerController : character {
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "NextLevel") {
             respawn();
+			GameObject upgrade = GameObject.Find("GUI");
+			GameObject up = upgrade.transform.Find ("Upgrade").gameObject;
+			up.SetActive(true);
+			Time.timeScale = 0f;
 		}
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
+
 	}
 
     void respawn() {
