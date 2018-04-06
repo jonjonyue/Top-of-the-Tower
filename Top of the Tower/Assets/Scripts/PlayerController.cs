@@ -27,6 +27,7 @@ public class PlayerController : character {
 	// Player Specific stats
 	public int mana;
 	private int maxHealth;
+	private int level;
 	private SpriteRenderer sr;
 	private Animator anim;
 
@@ -43,6 +44,7 @@ public class PlayerController : character {
 		attacking = false;
 		healthSlider.value = health;
 		maxHealth = health;
+		level = 1;
 	}
 	
 	// Update is called once per frame
@@ -198,9 +200,17 @@ public class PlayerController : character {
         maxHealth += 20;
         healthSlider.maxValue += 20;
         health = maxHealth;
-        Vector3 move = new Vector3(43.34f, .91f, -106.46f);
-        cc.gameObject.transform.position = move;
-        //43.34, .91, -106.46
-        //-31.96, .91, -4.86
+		if (level == 1) {
+			Vector3 move = new Vector3 (43.34f, .91f, -106.46f);
+			cc.gameObject.transform.position = move;
+			level = 2;
+		} else if (level == 2) {
+			Vector3 move = new Vector3 (151f, .91f, -183.8f);
+			cc.gameObject.transform.position = move;
+			level = 3;
+		} else if (level == 3) {
+			//Adrien code here
+		}
+
     }
 }
