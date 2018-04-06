@@ -199,8 +199,11 @@ public class PlayerController : character {
             respawn();
 			GameObject upgrade = GameObject.Find("GUI");
 			GameObject up = upgrade.transform.Find ("Upgrade").gameObject;
-			up.SetActive(true);
-			Time.timeScale = 0f;
+			if (level != 4) {
+				up.SetActive(true);
+				Time.timeScale = 0f;
+			}
+
 		}
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
@@ -221,10 +224,12 @@ public class PlayerController : character {
 			level = 3;
 		} else if (level == 3) {
 			//Adrien code here
-
+			level = 4;
 			GameObject upgrade = GameObject.Find("GUI");
-			GameObject up = upgrade.transform.Find ("Win").gameObject;
-			up.SetActive(true);
+			GameObject up1 = upgrade.transform.Find ("Win").gameObject;
+			//GameObject up2 = upgrade.transform.Find ("Upgrade").gameObject;
+			up1.SetActive(true);
+			//up2.SetActive(false);
 			Time.timeScale = 0f;
 		}
 
