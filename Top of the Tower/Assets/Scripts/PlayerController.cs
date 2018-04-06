@@ -27,6 +27,7 @@ public class PlayerController : character {
 	// Player Specific stats
 	public int mana;
 	private int maxHealth;
+	private int level;
 	private SpriteRenderer sr;
 	private Animator anim;
 
@@ -43,6 +44,7 @@ public class PlayerController : character {
 		attacking = false;
 		healthSlider.value = health;
 		maxHealth = health;
+		level = 1;
 	}
 	
 	// Update is called once per frame
@@ -160,7 +162,6 @@ public class PlayerController : character {
 		//print ("Hero took " + (damage - defense) + " damage...");
 		if (health <= 0) {
 			losing ();
-			//SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 		GetComponent<SpriteRenderer> ().color = Color.white;
 	}
@@ -172,7 +173,6 @@ public class PlayerController : character {
         if (health <= 0)
         {
 			losing ();
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         GetComponent<SpriteRenderer>().color = Color.white;
     }
@@ -183,6 +183,7 @@ public class PlayerController : character {
 		up.SetActive(true);
 		Time.timeScale = 0f;
 	}
+
 	public void heal(int hpRestored) {
 		if (health + hpRestored > maxHealth)
 			health = maxHealth;
@@ -204,16 +205,28 @@ public class PlayerController : character {
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
-
 	}
 
     void respawn() {
         maxHealth += 20;
         healthSlider.maxValue += 20;
         health = maxHealth;
-        Vector3 move = new Vector3(43.34f, .91f, -106.46f);
-        cc.gameObject.transform.position = move;
-        //43.34, .91, -106.46
-        //-31.96, .91, -4.86
+		if (level == 1) {
+			Vector3 move = new Vector3 (43.34f, .91f, -106.46f);
+			cc.gameObject.transform.position = move;
+			level = 2;
+		} else if (level == 2) {
+			Vector3 move = new Vector3 (151f, .91f, -183.8f);
+			cc.gameObject.transform.position = move;
+			level = 3;
+		} else if (level == 3) {
+			//Adrien code here
+
+			GameObject upgrade = GameObject.Find("GUI");
+			GameObject up = upgrade.transform.Find ("Win").gameObject;
+			up.SetActive(true);
+			Time.timeScale = 0f;
+		}
+
     }
 }
