@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Traps\BoulderTrap.cs" />
      <Compile Include="Assets\Scripts\Traps\SawTrap.cs" />
      <Compile Include="Assets\Scripts\Traps\TrapBase.cs" />
+     <Compile Include="Assets\startover.cs" />
      <None Include="Assets\Scenes\ReadMe-HowToMerge.txt" />
  <Reference Include="UnityEngine.UIAutomation">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>

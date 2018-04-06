@@ -159,7 +159,8 @@ public class PlayerController : character {
 		healthSlider.value = health;
 		//print ("Hero took " + (damage - defense) + " damage...");
 		if (health <= 0) {
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			losing ();
+			//SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 		}
 		GetComponent<SpriteRenderer> ().color = Color.white;
 	}
@@ -170,11 +171,18 @@ public class PlayerController : character {
         //print ("Hero took " + (damage - defense) + " damage...");
         if (health <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			losing ();
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         GetComponent<SpriteRenderer>().color = Color.white;
     }
 
+	public void losing(){
+		GameObject upgrade = GameObject.Find("GUI");
+		GameObject up = upgrade.transform.Find ("Lose").gameObject;
+		up.SetActive(true);
+		Time.timeScale = 0f;
+	}
 	public void heal(int hpRestored) {
 		if (health + hpRestored > maxHealth)
 			health = maxHealth;
