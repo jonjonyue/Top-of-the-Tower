@@ -332,11 +332,14 @@
     <Compile Include="Assets\DungeonTraps copy\sawCollision.cs" />
     <Compile Include="Assets\DungeonTraps copy\trapCollis.cs" />
     <Compile Include="Assets\DungeonTraps copy\Trapthing.cs" />
+    <Compile Include="Assets\ok.cs" />
     <Compile Include="Assets\Scripts\CameraClip.cs" />
     <Compile Include="Assets\Scripts\character.cs" />
+    <Compile Include="Assets\Scripts\DestroyOverTime.cs" />
     <Compile Include="Assets\Scripts\Enemies\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemies\Skeleton.cs" />
     <Compile Include="Assets\Scripts\Enemies\Zombie.cs" />
+    <Compile Include="Assets\Scripts\FloatingText.cs" />
     <Compile Include="Assets\Scripts\hiddenDoor.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\PauseControl.cs" />
@@ -345,8 +348,7 @@
     <Compile Include="Assets\Scripts\Traps\BoulderTrap.cs" />
     <Compile Include="Assets\Scripts\Traps\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Traps\TrapBase.cs" />
-    <Compile Include="Assets\Scripts\DestroyOverTime.cs" />
-    <Compile Include="Assets\Scripts\FloatingText.cs" />
+    <Compile Include="Assets\startover.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scenes\ReadMe-HowToMerge.txt" />

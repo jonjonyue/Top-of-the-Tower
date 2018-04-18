@@ -18,11 +18,12 @@ ExportedObj/
 *.tmp
 *.user
 *.userprefs
+*.info
 *.pidb
 *.booproj
 *.svd
 *.pdb
-.DS_Store
+*.DS_Store
 
 # Unity3D generated meta files
 *.pidb.meta

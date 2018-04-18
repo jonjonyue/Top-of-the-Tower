@@ -27,6 +27,7 @@ public class PlayerController : character {
 	// Player Specific stats
 	public int mana;
 	private int maxHealth;
+	private int level;
 	private SpriteRenderer sr;
 	private Animator anim;
 
@@ -43,6 +44,7 @@ public class PlayerController : character {
 		attacking = false;
 		healthSlider.value = health;
 		maxHealth = health;
+		level = 1;
 	}
 	
 	// Update is called once per frame
@@ -160,7 +162,7 @@ public class PlayerController : character {
 		healthSlider.value = health;
 		//print ("Hero took " + (damage - defense) + " damage...");
 		if (health <= 0) {
-			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+			losing ();
 		}
 		GetComponent<SpriteRenderer> ().color = Color.white;
 	}
@@ -171,10 +173,17 @@ public class PlayerController : character {
         //print ("Hero took " + (damage - defense) + " damage...");
         if (health <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			losing ();
         }
         GetComponent<SpriteRenderer>().color = Color.white;
     }
+
+	public void losing(){
+		GameObject upgrade = GameObject.Find("GUI");
+		GameObject up = upgrade.transform.Find ("Lose").gameObject;
+		up.SetActive(true);
+		Time.timeScale = 0f;
+	}
 
 	public void heal(int hpRestored) {
 		if (health + hpRestored > maxHealth)
@@ -189,6 +198,13 @@ public class PlayerController : character {
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "NextLevel") {
             respawn();
+			GameObject upgrade = GameObject.Find("GUI");
+			GameObject up = upgrade.transform.Find ("Upgrade").gameObject;
+			if (level != 4) {
+				up.SetActive(true);
+				Time.timeScale = 0f;
+			}
+
 		}
 		if (collider.tag == "Respawn") {
 			SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
@@ -198,10 +214,24 @@ public class PlayerController : character {
     void respawn() {
         maxHealth += 20;
         healthSlider.maxValue += 20;
-        heal(maxHealth - health);
-        Vector3 move = new Vector3(43.34f, .91f, -106.46f);
-        cc.gameObject.transform.position = move;
-        //43.34, .91, -106.46
-        //-31.96, .91, -4.86
+        health = maxHealth;
+		if (level == 1) {
+			Vector3 move = new Vector3 (43.34f, .91f, -106.46f);
+			cc.gameObject.transform.position = move;
+			level = 2;
+		} else if (level == 2) {
+			Vector3 move = new Vector3 (151f, .91f, -183.8f);
+			cc.gameObject.transform.position = move;
+			level = 3;
+		} else if (level == 3) {
+			//Adrien code here
+			level = 4;
+			GameObject upgrade = GameObject.Find("GUI");
+			GameObject up1 = upgrade.transform.Find ("Win").gameObject;
+			//GameObject up2 = upgrade.transform.Find ("Upgrade").gameObject;
+			up1.SetActive(true);
+			//up2.SetActive(false);
+			Time.timeScale = 0f;
+		}
     }
 }
