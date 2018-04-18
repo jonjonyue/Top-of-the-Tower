@@ -13,9 +13,14 @@ public class EnemyController : character {
 	public GameObject hitbox;
 	public Collider[] attackHitboxes;
 
+    public float wanderTimer;
+    public float wanderRadius;
+
 	private SpriteRenderer sr;
 	private Animator anim;
 	NavMeshAgent agent;
+
+    private float timer;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +32,8 @@ public class EnemyController : character {
         //health bar setup
         healthSlider.maxValue = health;
         healthSlider.value = health;
+
+        timer = wanderTimer + Random.Range(0, 3);
 	}
 
 	// Update is called once per frame
@@ -42,6 +49,19 @@ public class EnemyController : character {
                 counted = count();
             }
         }
+    }
+
+    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = Random.insideUnitSphere * dist;
+
+        randDirection += origin;
+
+        NavMeshHit navHit;
+
+        NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
+
+        return navHit.position;
     }
 
     static bool count()
@@ -154,18 +174,62 @@ public class EnemyController : character {
 			}
 		} else {
 			alert.SetActive (false);
+            timer += Time.deltaTime;
 
-			agent.SetDestination(transform.position);
+            if (timer >= wanderTimer)
+            {
+                Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                agent.SetDestination(newPos);
+                timer = 0;
+            }
 			// check which way he is facing, set idle animation to that one
 			if (!attacking) {
-				int currAnim = anim.GetInteger ("direction");
-				if (currAnim == 3) {
-					anim.SetBool ("idle", true);
-				} else if (currAnim == 1) {
-					anim.SetBool ("idle", true);
-				} else {
-					anim.SetBool ("idle", true);
-				}
+
+                if (agent.velocity.magnitude != 0) // if agent is wandering, walk
+                {
+
+                    var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
+
+                    if (enemyAngle >= 315f || enemyAngle < 45f)
+                    { /* Right */
+                        sr.flipX = false;
+                        anim.SetBool("idle", false);
+                        anim.SetInteger("direction", 1);
+                    }
+                    else if (enemyAngle >= 135f && enemyAngle < 225f)
+                    { /* Left */
+                        sr.flipX = true;
+                        anim.SetBool("idle", false);
+                        anim.SetInteger("direction", 1);
+                    }
+                    else if (enemyAngle >= 45f && enemyAngle < 135f)
+                    { /* Up */
+                        anim.SetBool("idle", false);
+                        anim.SetInteger("direction", 3);
+                    }
+                    else if (enemyAngle >= 225f && enemyAngle < 315f)
+                    { /* Down */
+                        anim.SetBool("idle", false);
+                        anim.SetInteger("direction", 0);
+                    }
+
+                }
+                else // If agent isn't wandering, idle
+                {
+                    int currAnim = anim.GetInteger("direction");
+                    if (currAnim == 3)
+                    {
+                        anim.SetBool("idle", true);
+                    }
+                    else if (currAnim == 1)
+                    {
+                        anim.SetBool("idle", true);
+                    }
+                    else
+                    {
+                        anim.SetBool("idle", true);
+                    }
+                }
 			}
 		}
 	}
