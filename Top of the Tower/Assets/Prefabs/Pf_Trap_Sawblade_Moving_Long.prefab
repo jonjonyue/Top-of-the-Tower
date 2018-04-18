@@ -433,5 +433,5 @@ MonoBehaviour:
   movingTrap: 1
   firstPos: {fileID: 4914241307374968}
   secondPos: {fileID: 4961141283002580}
-  speed: 1
+  speed: 2
   sanity: 1
