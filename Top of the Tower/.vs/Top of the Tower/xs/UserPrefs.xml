@@ -2,15 +2,13 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
     <Files>
       <File FileName="Assets/Scripts/character.cs" Line="25" Column="36" />
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="217" Column="1" />
-      <File FileName="Assets/Scripts/Enemies/EnemyController.cs" Line="77" Column="57" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="173" Column="100" />
+      <File FileName="Assets/Scripts/Enemies/EnemyController.cs" Line="195" Column="6" />
       <File FileName="Assets/Scripts/Traps/SawTrap.cs" Line="16" Column="6" />
       <File FileName="Assets/Scripts/Traps/BoulderTrap.cs" Line="12" Column="22" />
       <File FileName="Assets/Scripts/Traps/TrapBase.cs" Line="17" Column="12" />
       <File FileName="Assets/Scripts/SpawnScript.cs" Line="33" Column="19" />
       <File FileName="Assets/Scripts/hiddenDoor.cs" Line="30" Column="28" />
-      <File FileName="Assets/Scripts/DestroyOverTime.cs" Line="4" Column="29" />
-      <File FileName="Assets/Scripts/FloatingText.cs" Line="22" Column="117" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

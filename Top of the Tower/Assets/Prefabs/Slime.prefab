@@ -605,6 +605,8 @@ MonoBehaviour:
   isAlive: 1
   attacking: 0
   healthSlider: {fileID: 114299076721410794}
+  damageNumber: {fileID: 1499485633692074, guid: 186a017d39dd04100b7a920d243d63ad,
+    type: 2}
   aggroDistance: 4
   heroTransform: {fileID: 0}
   alert: {fileID: 1743084735784948}

@@ -186,7 +186,9 @@ public class EnemyController : character {
         {
             health -= damage - defense;
             healthSlider.value = health;
-            Debug.Log(charName + " took " + damage + " damage...");
+            var clone = (GameObject)Instantiate(damageNumber, gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
+            clone.GetComponent<FloatingText>().damageNumber = defense - damage;
+            //Debug.Log(charName + " took " + damage + " damage...");
             if (health <= 0)
                 dead();
         }

@@ -89,7 +89,6 @@ public class PlayerController : character {
 				EnemyController enemy = c.gameObject.GetComponentInParent<EnemyController> ();
                 enemy.GetComponent<SpriteRenderer> ().color = Color.red;
                 enemy.takeCombatDamage(strength);
-                var clone = Instantiate(damageNumber, enemy.transform.position + new Vector3(0,1,0), Quaternion.Euler(Vector3.zero));
 			}
 		}
 
@@ -124,21 +123,21 @@ public class PlayerController : character {
 		Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		cc.Move(move * Time.deltaTime * speed);
 
-		if (Input.GetKey(KeyCode.LeftArrow)) {
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) {
 			sr.flipX = true;
 			anim.SetInteger ("direction", 1);
 			attackHitboxes[0].center = new Vector3 (-.6f, .3f, 0f);
 		}
-		if (Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) {
 			sr.flipX = false;
 			anim.SetInteger ("direction", 1);
 			attackHitboxes[0].center = new Vector3 (.6f, .3f, 0f);
 		}
-		if (Input.GetKey(KeyCode.DownArrow)) {
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) {
 			anim.SetInteger ("direction", 0);
 			attackHitboxes[0].center = new Vector3 (0f, .3f, -.6f);
 		}
-		if (Input.GetKey(KeyCode.UpArrow)) {
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) {
 			anim.SetInteger ("direction", 3);
 			attackHitboxes[0].center = new Vector3 (0f, .3f, .6f);
 		}
@@ -170,6 +169,9 @@ public class PlayerController : character {
     override public void takeCombatDamage(int damage) {
         health -= damage - defense;
         healthSlider.value = health;
+
+        var clone = (GameObject)Instantiate(damageNumber, transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
+        clone.GetComponent<FloatingText>().damageNumber = defense - damage;
         //print ("Hero took " + (damage - defense) + " damage...");
         if (health <= 0)
         {
@@ -215,6 +217,7 @@ public class PlayerController : character {
         maxHealth += 20;
         healthSlider.maxValue += 20;
         health = maxHealth;
+        healthSlider.value = health;
 		if (level == 1) {
 			Vector3 move = new Vector3 (43.34f, .91f, -106.46f);
 			cc.gameObject.transform.position = move;
