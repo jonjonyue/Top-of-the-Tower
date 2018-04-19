@@ -306,7 +306,7 @@ Transform:
   m_GameObject: {fileID: 1559209573057952}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -7.4, y: 1.25, z: -14.53}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4347464043326886}
   - {fileID: 4498058202864760}
@@ -604,7 +604,7 @@ MonoBehaviour:
   attackHitboxes:
   - {fileID: 135871441936766478}
   wanderTimer: 7
-  wanderRadius: 8
+  wanderRadius: 4
 --- !u!114 &114843100235937016
 MonoBehaviour:
   m_ObjectHideFlags: 1

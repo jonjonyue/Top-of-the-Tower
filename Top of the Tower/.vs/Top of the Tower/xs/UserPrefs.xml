@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemies/EnemyController.cs">
     <Files>
       <File FileName="Assets/Scripts/character.cs" Line="25" Column="36" />
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="173" Column="100" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="173" Column="37" />
       <File FileName="Assets/Scripts/Enemies/EnemyController.cs" Line="15" Column="5" />
       <File FileName="Assets/Scripts/Traps/SawTrap.cs" Line="16" Column="6" />
       <File FileName="Assets/Scripts/Traps/BoulderTrap.cs" Line="12" Column="22" />

@@ -614,7 +614,7 @@ MonoBehaviour:
   attackHitboxes:
   - {fileID: 135161938626144458}
   wanderTimer: 4
-  wanderRadius: 15
+  wanderRadius: 3
 --- !u!114 &114760007587066644
 MonoBehaviour:
   m_ObjectHideFlags: 1

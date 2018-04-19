@@ -21,6 +21,7 @@ public class EnemyController : character {
 	NavMeshAgent agent;
 
     private float timer;
+    private Vector3 startPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +35,7 @@ public class EnemyController : character {
         healthSlider.value = health;
 
         timer = wanderTimer + Random.Range(0, 3);
+        startPosition = transform.position;
 	}
 
 	// Update is called once per frame
@@ -178,7 +180,7 @@ public class EnemyController : character {
 
             if (timer >= wanderTimer)
             {
-                Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                Vector3 newPos = RandomNavSphere(startPosition, wanderRadius, -1);
                 agent.SetDestination(newPos);
                 timer = 0;
             }
@@ -257,7 +259,27 @@ public class EnemyController : character {
             //Debug.Log(charName + " took " + damage + " damage...");
             if (health <= 0)
                 dead();
+            else
+                StartCoroutine(flinch());
         }
+    }
+
+    IEnumerator flinch()
+    {
+        int animLayer = 0;
+        string stateName = "flinch";
+        anim.SetTrigger("flinch");
+
+        //Wait until Animator is done playing
+        while (anim.GetCurrentAnimatorStateInfo(animLayer).IsName(stateName) &&
+            anim.GetCurrentAnimatorStateInfo(animLayer).normalizedTime < 1.0f)
+        {
+            //Wait every frame until animation has finished
+            yield return null;
+        }
+
+        //Done playing. Do something below!
+        //Debug.Log("flinched");
     }
 
 	void dead() {
