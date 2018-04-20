@@ -573,6 +573,7 @@ MonoBehaviour:
   - {fileID: 135208263404588488}
   wanderTimer: 5
   wanderRadius: 5
+  attackDistance: 1
 --- !u!114 &114842664230421422
 MonoBehaviour:
   m_ObjectHideFlags: 1

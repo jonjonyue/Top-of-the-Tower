@@ -3,32 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Threading;
-public class EnemyController : character {
+public class EnemyController : character
+{
 
-	// Enemy Specific Stats
-	public float aggroDistance;
+    // Enemy Specific Stats
+    public float aggroDistance;
 
-	public Transform heroTransform;
-	public GameObject alert;
-	public GameObject hitbox;
-	public Collider[] attackHitboxes;
+    public Transform heroTransform;
+    public GameObject alert;
+    public GameObject hitbox;
+    public Collider[] attackHitboxes;
 
     public float wanderTimer;
     public float wanderRadius;
+    public float attackDistance;
 
-	private SpriteRenderer sr;
-	private Animator anim;
-	NavMeshAgent agent;
+    [HideInInspector] public SpriteRenderer sr;
+    [HideInInspector] public Animator anim;
+    [HideInInspector] public NavMeshAgent agent;
 
-    private float timer;
-    private Vector3 startPosition;
+    [HideInInspector] public float timer;
+    [HideInInspector] public Vector3 startPosition;
 
-	// Use this for initialization
-	void Start () {
-		sr = GetComponent<SpriteRenderer> ();
-		anim = GetComponent<Animator> ();
-		attacking = false;
-		agent = GetComponent<NavMeshAgent> ();
+    // Use this for initialization
+    protected virtual void Start()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+        attacking = false;
+        agent = GetComponent<NavMeshAgent>();
 
         //health bar setup
         healthSlider.maxValue = health;
@@ -36,13 +39,15 @@ public class EnemyController : character {
 
         timer = wanderTimer + Random.Range(0, 3);
         startPosition = transform.position;
-	}
+    }
 
-	// Update is called once per frame
-	void Update () {
-		if (isAlive) {
-			Move ();
-		}
+    // Update is called once per frame
+    protected virtual void Update()
+    {
+        if (isAlive)
+        {
+            Move();
+        }
 
         if (!counted)
         {
@@ -66,7 +71,7 @@ public class EnemyController : character {
         return navHit.position;
     }
 
-    static bool count()
+    public static bool count()
     {
 
         if (Monitor.TryEnter(locker))
@@ -81,35 +86,41 @@ public class EnemyController : character {
         }
     }
 
-    void Attack(Collider col) {
-		// can't do 2 attacks at once
-		if (!attacking) {
+    public virtual void Attack(Collider col)
+    {
+        // can't do 2 attacks at once
+        if (!attacking)
+        {
 
-			// START THE ATTACK!!!
-			attacking = true;
+            // START THE ATTACK!!!
+            attacking = true;
 
-			//ATTACK ANIMATION
-			//Note: this depends on the direction (using Triggers)
-			anim.SetTrigger ("attack");
+            //ATTACK ANIMATION
+            //Note: this depends on the direction (using Triggers)
+            anim.SetTrigger("attack");
             StartCoroutine(wait(col));
-		}
-	}
+        }
+    }
 
-    IEnumerator wait(Collider col) {
-        yield return new WaitForSeconds(Random.Range(.2f,.5f));
+    IEnumerator wait(Collider col)
+    {
+        yield return new WaitForSeconds(Random.Range(.2f, .5f));
 
         StartCoroutine(damage(col));
     }
 
-	public virtual IEnumerator damage(Collider col) {
+    public virtual IEnumerator damage(Collider col)
+    {
 
-		// Get the hitboxes hit by the attack
-		Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+        // Get the hitboxes hit by the attack
+        Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
         bool hit = false;
-		//ATTACK MECHANICS
-		foreach (Collider c in cols) {
-			if (c.tag == "Player") {
+        //ATTACK MECHANICS
+        foreach (Collider c in cols)
+        {
+            if (c.tag == "Player")
+            {
                 if (isAlive)
                 {
                     PlayerController player = c.gameObject.GetComponentInParent<PlayerController>();
@@ -121,61 +132,70 @@ public class EnemyController : character {
                     yield return new WaitForSeconds(.4f);
                     hit = true;
                 }
-			}
-		}
+            }
+        }
         if (!hit)
             yield return new WaitForSeconds(.6f);
 
-		// we are done attacking
-		attacking = false;
-	}
+        // we are done attacking
+        attacking = false;
+    }
 
-	// Moves the Player (if keys are down)
-	// Check key press, move in that direction
-	// also changes animation for smooth walk
-	// if no key pressed, idle animation
-	void Move() {
-		// animation codes:
-		// 0 - forward walk
-		// 1 - side walk
-		// 3 - back walk
+    // Moves the Player (if keys are down)
+    // Check key press, move in that direction
+    // also changes animation for smooth walk
+    // if no key pressed, idle animation
+    public virtual void Move()
+    {
+        // animation codes:
+        // 0 - forward walk
+        // 1 - side walk
+        // 3 - back walk
 
-		Vector3 targetPosition = heroTransform.position;
-		Vector3 targetVector = targetPosition - transform.position;
+        Vector3 targetPosition = heroTransform.position;
+        Vector3 targetVector = targetPosition - transform.position;
 
-		if (targetVector.magnitude < aggroDistance) {
-			alert.SetActive (true);
-			if (Mathf.Abs(targetVector.magnitude) > 1) {
-				//Vector3 unitVector = targetVector / targetVector.magnitude;
+        if (targetVector.magnitude < aggroDistance)
+        {
+            alert.SetActive(true);
+            //if (Mathf.Abs(targetVector.magnitude) > attackDistance && !attacking)
+            //{
+            //Vector3 unitVector = targetVector / targetVector.magnitude;
 
-				agent.SetDestination(heroTransform.position);
+            agent.SetDestination(heroTransform.position);
 
-				var enemyAngle = Mathf.Atan2 (targetVector.z, targetVector.x) * Mathf.Rad2Deg;
+            var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
 
-				if (enemyAngle < 0.0f)
-					enemyAngle += 360;
+            if (enemyAngle < 0.0f)
+                enemyAngle += 360;
 
-				if (enemyAngle >= 315f || enemyAngle < 45f) { /* Right */
-					sr.flipX = false;
-					anim.SetBool ("idle", false);
-					anim.SetInteger ("direction", 1);
-				} else if (enemyAngle >= 135f && enemyAngle < 225f) { /* Left */
-					sr.flipX = true;
-					anim.SetBool ("idle", false);
-					anim.SetInteger ("direction", 1);
-				} else if (enemyAngle >= 45f && enemyAngle < 135f) { /* Up */
-					anim.SetBool ("idle", false);
-					anim.SetInteger ("direction", 3);
-				} else if (enemyAngle >= 225f && enemyAngle < 315f) { /* Down */
-					anim.SetBool ("idle", false);
-					anim.SetInteger ("direction", 0);
-				}
-			} else if (!attacking) {
-				agent.SetDestination(transform.position);
-				Attack (attackHitboxes[0]);
-			}
-		} else {
-			alert.SetActive (false);
+            if (enemyAngle >= 315f || enemyAngle < 45f)
+            { /* Right */
+                sr.flipX = false;
+                anim.SetBool("idle", false);
+                anim.SetInteger("direction", 1);
+            }
+            else if (enemyAngle >= 135f && enemyAngle < 225f)
+            { /* Left */
+                sr.flipX = true;
+                anim.SetBool("idle", false);
+                anim.SetInteger("direction", 1);
+            }
+            else if (enemyAngle >= 45f && enemyAngle < 135f)
+            { /* Up */
+                anim.SetBool("idle", false);
+                anim.SetInteger("direction", 3);
+            }
+            else if (enemyAngle >= 225f && enemyAngle < 315f)
+            { /* Down */
+                anim.SetBool("idle", false);
+                anim.SetInteger("direction", 0);
+            }
+            //}
+        }
+        else
+        {
+            alert.SetActive(false);
             timer += Time.deltaTime;
 
             if (timer >= wanderTimer)
@@ -184,69 +204,71 @@ public class EnemyController : character {
                 agent.SetDestination(newPos);
                 timer = 0;
             }
-			// check which way he is facing, set idle animation to that one
-			if (!attacking) {
+            // check which way he is facing, set idle animation to that one
+            //if (!attacking) {
 
-                if (agent.velocity.magnitude != 0) // if agent is wandering, walk
-                {
+            if (agent.velocity.magnitude != 0) // if agent is wandering, walk
+            {
 
-                    var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
+                var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
 
-                    if (enemyAngle >= 315f || enemyAngle < 45f)
-                    { /* Right */
-                        sr.flipX = false;
-                        anim.SetBool("idle", false);
-                        anim.SetInteger("direction", 1);
-                    }
-                    else if (enemyAngle >= 135f && enemyAngle < 225f)
-                    { /* Left */
-                        sr.flipX = true;
-                        anim.SetBool("idle", false);
-                        anim.SetInteger("direction", 1);
-                    }
-                    else if (enemyAngle >= 45f && enemyAngle < 135f)
-                    { /* Up */
-                        anim.SetBool("idle", false);
-                        anim.SetInteger("direction", 3);
-                    }
-                    else if (enemyAngle >= 225f && enemyAngle < 315f)
-                    { /* Down */
-                        anim.SetBool("idle", false);
-                        anim.SetInteger("direction", 0);
-                    }
-
+                if (enemyAngle >= 315f || enemyAngle < 45f)
+                { /* Right */
+                    sr.flipX = false;
+                    anim.SetBool("idle", false);
+                    anim.SetInteger("direction", 1);
                 }
-                else // If agent isn't wandering, idle
-                {
-                    int currAnim = anim.GetInteger("direction");
-                    if (currAnim == 3)
-                    {
-                        anim.SetBool("idle", true);
-                    }
-                    else if (currAnim == 1)
-                    {
-                        anim.SetBool("idle", true);
-                    }
-                    else
-                    {
-                        anim.SetBool("idle", true);
-                    }
+                else if (enemyAngle >= 135f && enemyAngle < 225f)
+                { /* Left */
+                    sr.flipX = true;
+                    anim.SetBool("idle", false);
+                    anim.SetInteger("direction", 1);
                 }
-			}
-		}
-	}
+                else if (enemyAngle >= 45f && enemyAngle < 135f)
+                { /* Up */
+                    anim.SetBool("idle", false);
+                    anim.SetInteger("direction", 3);
+                }
+                else if (enemyAngle >= 225f && enemyAngle < 315f)
+                { /* Down */
+                    anim.SetBool("idle", false);
+                    anim.SetInteger("direction", 0);
+                }
 
-	override public void takeDamage(int damage) {
-		if (isAlive) {
-			health -= damage;
+            }
+            else // If agent isn't wandering, idle
+            {
+                int currAnim = anim.GetInteger("direction");
+                if (currAnim == 3)
+                {
+                    anim.SetBool("idle", true);
+                }
+                else if (currAnim == 1)
+                {
+                    anim.SetBool("idle", true);
+                }
+                else
+                {
+                    anim.SetBool("idle", true);
+                }
+            }
+            //}
+        }
+    }
+
+    override public void takeDamage(int damage)
+    {
+        if (isAlive)
+        {
+            health -= damage;
             healthSlider.value = health;
             var clone = (GameObject)Instantiate(damageNumber, transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
             clone.GetComponent<FloatingText>().damageNumber = -1 * damage;
             //Debug.Log (charName + " took " + damage + " damage...");
-			if (health <= 0)
-				dead ();
-		}
-	}
+            if (health <= 0)
+                dead();
+        }
+    }
 
     override public void takeCombatDamage(int damage)
     {
@@ -282,11 +304,12 @@ public class EnemyController : character {
         //Debug.Log("flinched");
     }
 
-	void dead() {
-		isAlive = false;
-		anim.SetTrigger ("dead");
-		alert.SetActive (false);
-		hitbox.SetActive (false);
+    void dead()
+    {
+        isAlive = false;
+        anim.SetTrigger("dead");
+        alert.SetActive(false);
+        hitbox.SetActive(false);
         healthSlider.gameObject.SetActive(false);
-	}
+    }
 }

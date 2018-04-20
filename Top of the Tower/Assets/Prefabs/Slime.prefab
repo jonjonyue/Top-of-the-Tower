@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 4597723749540230}
   - component: {fileID: 212702906876088520}
   - component: {fileID: 95908703636035538}
-  - component: {fileID: 114407555594206150}
+  - component: {fileID: 114681659435872364}
   - component: {fileID: 195052031353565232}
   m_Layer: 0
   m_Name: Slime
@@ -292,7 +292,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456035074665912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.13, y: 1.316, z: -14.42}
+  m_LocalPosition: {x: -4.021143, y: 1.92, z: -13.51335}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4170084804525282}
@@ -455,8 +455,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 1.65, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.7, y: 1.65, z: 0.1}
+  m_Center: {x: 0.1, y: 0, z: 0}
 --- !u!95 &95908703636035538
 Animator:
   serializedVersion: 3
@@ -586,7 +586,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114407555594206150
+--- !u!114 &114681659435872364
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1456035074665912}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ade869f93ce4eeba6f514956fcf306, type: 3}
+  m_Script: {fileID: 11500000, guid: d1599bfd2529a4cb390d9b18c7dea6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   charName: Slime
@@ -615,6 +615,13 @@ MonoBehaviour:
   - {fileID: 135161938626144458}
   wanderTimer: 4
   wanderRadius: 3
+  attackDistance: 2
+  sr: {fileID: 0}
+  anim: {fileID: 0}
+  agent: {fileID: 0}
+  timer: 0
+  startPosition: {x: 0, y: 0, z: 0}
+  dashSpeed: 5
 --- !u!114 &114760007587066644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -691,8 +698,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0.1, y: 0, z: 0}
+  m_Radius: 0.6
+  m_Center: {x: 0.1, y: -0.8, z: 0}
 --- !u!136 &136055687659475480
 CapsuleCollider:
   m_ObjectHideFlags: 1
