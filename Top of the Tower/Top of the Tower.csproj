@@ -333,7 +333,9 @@
     <Compile Include="Assets\Scripts\Enemies\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemies\Necromancer.cs" />
     <Compile Include="Assets\Scripts\Enemies\Skeleton.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Slime.cs" />
     <Compile Include="Assets\Scripts\Enemies\Zombie.cs" />
+    <Compile Include="Assets\Scripts\explosion.cs" />
     <Compile Include="Assets\Scripts\FloatingText.cs" />
     <Compile Include="Assets\Scripts\hiddenDoor.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
@@ -344,7 +346,6 @@
     <Compile Include="Assets\Scripts\Traps\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Traps\TrapBase.cs" />
     <Compile Include="Assets\startover.cs" />
-    <Compile Include="Assets\Scripts\Enemies\Slime.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scenes\ReadMe-HowToMerge.txt" />

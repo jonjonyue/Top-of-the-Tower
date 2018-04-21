@@ -22,7 +22,7 @@ public class EnemyController : character
     [HideInInspector] public Animator anim;
     [HideInInspector] public NavMeshAgent agent;
 
-    [HideInInspector] public float timer;
+    [HideInInspector] public float timer = 0;
     [HideInInspector] public Vector3 startPosition;
 
     // Use this for initialization

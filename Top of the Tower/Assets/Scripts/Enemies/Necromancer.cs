@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Necromancer : EnemyController {
 
     // Necromancer stuff
+    public GameObject explosion;
 
 	protected override void Start()
 	{
@@ -24,92 +25,70 @@ public class Necromancer : EnemyController {
 
 	protected override void Update()
 	{
-        if(isAlive) {
-            Move();
+        //if(isAlive) {
+        //    Move();
+        //}
+        if (timer > 3f) {
+            timer = 0;
+            spawnExplosion();
         }
+        timer += Time.deltaTime;
 	}
 
-    override public void takeDamage(int damage)
-    {
-        if (isAlive)
-        {
-            health -= damage;
-            healthSlider.value = health;
-            var clone = (GameObject)Instantiate(damageNumber, transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
-            clone.GetComponent<FloatingText>().damageNumber = -1 * damage;
-
-            if (health <= 0) {}
-                // kill necro
-        }
+	private void spawnExplosion() {
+        anim.SetTrigger("attack");
+        GameObject explo = Instantiate(explosion, heroTransform.position, heroTransform.rotation) as GameObject;
     }
 
-    override public void takeCombatDamage(int damage)
+    public override void Move()
     {
-        if (isAlive)
-        {
-            health -= damage - defense;
-            healthSlider.value = health;
-            var clone = (GameObject)Instantiate(damageNumber, gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
-            clone.GetComponent<FloatingText>().damageNumber = defense - damage;
-
-            if (health <= 0) {}
-                // kill necro
-        }
-    }
-
-    void Move()
-    {
-        // animation codes:
-        // 0 - forward walk
-        // 1 - side walk
-        // 3 - back walk
 
         Vector3 targetPosition = heroTransform.position;
         Vector3 targetVector = targetPosition - transform.position;
 
-        if (targetVector.magnitude < aggroDistance)
-        {
-            //alert.SetActive(true);
-            if (Mathf.Abs(targetVector.magnitude) > 1)
-            {
-                //Vector3 unitVector = targetVector / targetVector.magnitude;
+        //if (targetVector.magnitude < aggroDistance)
+        //{
+        //    //alert.SetActive(true);
+        //    if (Mathf.Abs(targetVector.magnitude) > 1)
+        //    {
+        //        //Vector3 unitVector = targetVector / targetVector.magnitude;
 
-                agent.SetDestination(heroTransform.position);
+        //        agent.SetDestination(heroTransform.position);
 
-                var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
+        //        var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
 
-                if (enemyAngle < 0.0f)
-                    enemyAngle += 360;
+        //        if (enemyAngle < 0.0f)
+        //            enemyAngle += 360;
 
-                if (enemyAngle >= 315f || enemyAngle < 45f)
-                { /* Right */
-                    sr.flipX = false;
-                    anim.SetBool("idle", false);
-                    anim.SetInteger("direction", 1);
-                }
-                else if (enemyAngle >= 135f && enemyAngle < 225f)
-                { /* Left */
-                    sr.flipX = true;
-                    anim.SetBool("idle", false);
-                    anim.SetInteger("direction", 1);
-                }
-                else if (enemyAngle >= 45f && enemyAngle < 135f)
-                { /* Up */
-                    anim.SetBool("idle", false);
-                    anim.SetInteger("direction", 3);
-                }
-                else if (enemyAngle >= 225f && enemyAngle < 315f)
-                { /* Down */
-                    anim.SetBool("idle", false);
-                    anim.SetInteger("direction", 0);
-                }
-            }
-            else if (!attacking)
-            {
-                agent.SetDestination(transform.position);
-                //Attack(attackHitboxes[0]);
-            }
-        }
+        //        if (enemyAngle >= 315f || enemyAngle < 45f)
+        //        { /* Right */
+        //            sr.flipX = false;
+        //            anim.SetBool("idle", false);
+        //            anim.SetInteger("direction", 1);
+        //        }
+        //        else if (enemyAngle >= 135f && enemyAngle < 225f)
+        //        { /* Left */
+        //            sr.flipX = true;
+        //            anim.SetBool("idle", false);
+        //            anim.SetInteger("direction", 1);
+        //        }
+        //        else if (enemyAngle >= 45f && enemyAngle < 135f)
+        //        { /* Up */
+        //            anim.SetBool("idle", false);
+        //            anim.SetInteger("direction", 3);
+        //        }
+        //        else if (enemyAngle >= 225f && enemyAngle < 315f)
+        //        { /* Down */
+        //            anim.SetBool("idle", false);
+        //            anim.SetInteger("direction", 0);
+        //        }
+        //    }
+        //    else if (!attacking)
+        //    {
+        //        agent.SetDestination(transform.position);
+        //        //Attack(attackHitboxes[0]);
+        //    }
+        //}
         //else
         //{
         //    alert.SetActive(false);
@@ -172,5 +151,33 @@ public class Necromancer : EnemyController {
         //        }
         //    }
         //}
+    }
+
+    override public void takeDamage(int damage)
+    {
+        if (isAlive)
+        {
+            health -= damage;
+            healthSlider.value = health;
+            var clone = (GameObject)Instantiate(damageNumber, transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
+            clone.GetComponent<FloatingText>().damageNumber = -1 * damage;
+
+            if (health <= 0) {}
+                // kill necro
+        }
+    }
+
+    override public void takeCombatDamage(int damage)
+    {
+        if (isAlive)
+        {
+            health -= damage - defense;
+            healthSlider.value = health;
+            var clone = (GameObject)Instantiate(damageNumber, gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
+            clone.GetComponent<FloatingText>().damageNumber = defense - damage;
+
+            if (health <= 0) {}
+                // kill necro
+        }
     }
 }
