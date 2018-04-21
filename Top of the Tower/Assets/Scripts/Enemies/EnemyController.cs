@@ -46,7 +46,14 @@ public class EnemyController : character
     {
         if (isAlive)
         {
-            Move();
+            if (Vector3.Distance(transform.position, heroTransform.position) < attackDistance || attacking)
+            {
+                Attack(attackHitboxes[0]);
+            }
+            else
+            {
+                Move();
+            }
         }
 
         if (!counted)

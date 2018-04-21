@@ -8,7 +8,6 @@ public class Slime : EnemyController
     private bool didHitWhileDashing = false;
     public float dashSpeed;
 
-    private float attackTimer = 0;
 
 
     protected override void Start()
@@ -22,19 +21,20 @@ public class Slime : EnemyController
     {
         if (isAlive)
         {
-            if (Vector3.Distance(transform.position, heroTransform.position) < attackDistance || attacking)
+            if (Vector3.Distance(transform.position, heroTransform.position) < attackDistance && !attacking)
             {
+                attacking = true;
                 Attack(attackHitboxes[0]);
             }
-            else
+            else if (!attacking)
             {
                 Move();
             }
         }
-
-        if (!counted)
+        else
         {
-            if (health <= 0)
+
+            if (!counted)
             {
                 counted = count();
             }
@@ -43,123 +43,85 @@ public class Slime : EnemyController
 
     public override void Attack(Collider col)
     {
-        if (attacking)
-        {
-            launchAttack();
-
-        }
-        else
-        {
-            anim.SetTrigger("attack");
-            //agent.updatePosition = false;
-            attackStartPosition = transform.position;
-            Vector3 targetVector = (transform.position - heroTransform.position) * -1.5f;
-            targetVector.y = targetVector.y / 1.5f;
-            target = attackStartPosition + targetVector;
-            agent.speed = 8;
-            agent.SetDestination(target);
-            attacking = true;
-        }
+        StartCoroutine(dashAttack());
     }
 
-    /*
-     *  Make sure to set initial position and target before calling this function
-     * 
-     */
-    void launchAttack()
+    IEnumerator dashAttack()
     {
-        if (attackTimer > 1.5f)
-        {
-            Debug.Log("Attack End");
-            agent.speed = 1.5f;
-            StartCoroutine(wait());
-            //agent.updatePosition = true;
-        }
-        else
-        {
-            //transform.position = Vector3.Lerp(attackStartPosition, target, dashSpeed * Time.deltaTime);
-            //agent.nextPosition = transform.position;
-            //Debug.Log("Checking for hit");
-            StartCoroutine(damage(attackHitboxes[0]));
-        }
-    }
+        anim.SetTrigger("attack");
+        attackStartPosition = transform.position;
+        Vector3 targetVector = (transform.position - heroTransform.position) * -1.5f;
+        targetVector.y = targetVector.y / 1.5f;
+        target = attackStartPosition + targetVector;
+        agent.speed = 8;
+        agent.SetDestination(target);
 
-    public override IEnumerator damage(Collider col)
-    {
-        Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
-        //ATTACK MECHANICS
-        foreach (Collider c in cols)
+        while (agent.remainingDistance > 0)
         {
-            if (c.tag == "Player")
+            //Debug.Log("Remaining dash distance = " + agent.remainingDistance);
+            if (!didHitWhileDashing)
             {
-                if (!didHitWhileDashing)
+                Collider col = attackHitboxes[0];
+                Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+
+                //ATTACK MECHANICS
+                foreach (Collider c in cols)
                 {
-                    Debug.Log("Hit!");
-                    PlayerController player = c.gameObject.GetComponentInParent<PlayerController>();
-                    Color originalColor = player.GetComponent<SpriteRenderer>().color;
-                    player.GetComponent<SpriteRenderer>().color = Color.red;
-                    yield return new WaitForSeconds(.2f);
-                    attackTimer += .2f;
-                    player.GetComponent<SpriteRenderer>().color = originalColor;
-                    player.takeCombatDamage(strength);
-                    yield return new WaitForSeconds(.4f);
-                    attackTimer += .4f;
-                    didHitWhileDashing = true;
+                    if (c.tag == "Player")
+                    {
+                        Debug.Log("Hit!");
+                        didHitWhileDashing = true;
+                        StartCoroutine(damage(attackHitboxes[0]));
+                    }
                 }
             }
-        }
-        attackTimer += Time.deltaTime;
-    }
-
-    IEnumerator wait()
-    {
-        attackTimer = 0;
-        while(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) 
-        {
-            attackTimer = 0;
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
-        attackTimer = 0;
+
+        Debug.Log("Attack End");
+        agent.speed = 1.5f;
+        yield return new WaitForSeconds(.5f);
         attacking = false;
         didHitWhileDashing = false;
     }
 
+    public override IEnumerator damage(Collider col)
+    {
+        PlayerController player = GameObject.Find("Hero").GetComponent<PlayerController>();
+        Color originalColor = player.GetComponent<SpriteRenderer>().color;
+
+        player.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(.2f);
+        player.GetComponent<SpriteRenderer>().color = originalColor;
+        player.takeCombatDamage(strength);
+    }
+
     public override void Move()
     {
-
-        Vector3 targetPosition = heroTransform.position;
-        Vector3 targetVector = targetPosition - transform.position;
+        Vector3 targetVector = heroTransform.position - transform.position;
 
         if (targetVector.magnitude < aggroDistance)
         {
             alert.SetActive(true);
-            if (Mathf.Abs(targetVector.magnitude) > attackDistance && !attacking)
-            {
-                //Vector3 unitVector = targetVector / targetVector.magnitude;
+            //Vector3 unitVector = targetVector / targetVector.magnitude;
 
-                agent.SetDestination(heroTransform.position);
+            agent.SetDestination(heroTransform.position);
 
-                var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
+            var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
 
-                if (enemyAngle < 0.0f)
-                    enemyAngle += 360;
+            if (enemyAngle < 0.0f)
+                enemyAngle += 360;
 
-                if (enemyAngle >= 315f || enemyAngle < 45f)
-                { /* Right */
-                    sr.flipX = false;
-                }
-                else if (enemyAngle >= 135f && enemyAngle < 225f)
-                { /* Left */
-                    sr.flipX = true;
-                }
-                anim.SetBool("idle", false);
+            if (enemyAngle >= 315f || enemyAngle < 45f)
+            { /* Right */
+                sr.flipX = false;
             }
-            else
-            {
-                Attack(attackHitboxes[0]);
+            else if (enemyAngle >= 135f && enemyAngle < 225f)
+            { /* Left */
+                sr.flipX = true;
             }
+            anim.SetBool("idle", false);
         }
         else
         {
@@ -169,7 +131,6 @@ public class Slime : EnemyController
             if (timer >= wanderTimer)
             {
                 Vector3 newPos = RandomNavSphere(startPosition, wanderRadius, -1);
-                targetPosition = newPos;
                 agent.SetDestination(newPos);
                 timer = 0;
             }
