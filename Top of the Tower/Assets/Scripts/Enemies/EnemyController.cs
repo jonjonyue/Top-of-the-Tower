@@ -9,7 +9,7 @@ public class EnemyController : character
     // Enemy Specific Stats
     public float aggroDistance;
 
-    public Transform heroTransform;
+    [HideInInspector]public Transform heroTransform;
     public GameObject alert;
     public GameObject hitbox;
     public Collider[] attackHitboxes;
@@ -36,6 +36,8 @@ public class EnemyController : character
         //health bar setup
         healthSlider.maxValue = health;
         healthSlider.value = health;
+
+        heroTransform = GameObject.Find("Hero").transform;
 
         timer = wanderTimer + Random.Range(0, 3);
         startPosition = transform.position;

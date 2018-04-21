@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 4197925181144060}
   - component: {fileID: 212273536568663892}
   - component: {fileID: 95378858916487172}
-  - component: {fileID: 114799741740503852}
+  - component: {fileID: 114848852259318232}
   - component: {fileID: 195552967409462094}
   m_Layer: 0
   m_Name: Skeleton
@@ -544,36 +544,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114799741740503852
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1255302878562364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13ade869f93ce4eeba6f514956fcf306, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  charName: Skeleton
-  health: 8
-  defense: 0
-  speed: 4
-  strength: 2
-  isAlive: 1
-  attacking: 0
-  healthSlider: {fileID: 114842664230421422}
-  damageNumber: {fileID: 1499485633692074, guid: 186a017d39dd04100b7a920d243d63ad,
-    type: 2}
-  aggroDistance: 5
-  heroTransform: {fileID: 0}
-  alert: {fileID: 1239707295526636}
-  hitbox: {fileID: 1544697329319020}
-  attackHitboxes:
-  - {fileID: 135208263404588488}
-  wanderTimer: 5
-  wanderRadius: 5
-  attackDistance: 1
 --- !u!114 &114842664230421422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -622,6 +592,41 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114848852259318232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1255302878562364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6375eb314e594320816146b6faabb70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  charName: Skeleton
+  health: 8
+  defense: 0
+  speed: 4
+  strength: 2
+  isAlive: 1
+  attacking: 0
+  healthSlider: {fileID: 114842664230421422}
+  damageNumber: {fileID: 1499485633692074, guid: 186a017d39dd04100b7a920d243d63ad,
+    type: 2}
+  aggroDistance: 5
+  heroTransform: {fileID: 0}
+  alert: {fileID: 1239707295526636}
+  hitbox: {fileID: 1544697329319020}
+  attackHitboxes:
+  - {fileID: 135208263404588488}
+  wanderTimer: 5
+  wanderRadius: 5
+  attackDistance: 1
+  sr: {fileID: 0}
+  anim: {fileID: 0}
+  agent: {fileID: 0}
+  timer: 0
+  startPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &114863851459307604
 MonoBehaviour:
   m_ObjectHideFlags: 1

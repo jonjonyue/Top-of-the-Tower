@@ -7,6 +7,7 @@ public class Necromancer : EnemyController {
 
     // Necromancer stuff
     public GameObject explosion;
+    public Transform[] skeletonSpawns;
 
 	protected override void Start()
 	{
@@ -19,6 +20,7 @@ public class Necromancer : EnemyController {
         healthSlider.maxValue = health;
         healthSlider.value = health;
 
+        alert.SetActive(false);
 
         attacking = false;
 	}
@@ -40,117 +42,15 @@ public class Necromancer : EnemyController {
         GameObject explo = Instantiate(explosion, heroTransform.position, heroTransform.rotation) as GameObject;
     }
 
+    private void spawnSkeleton() {
+        for (int i = 0; i < skeletonSpawns.Length; ++i) {
+            
+        }
+    }
+
     public override void Move()
     {
-
-        Vector3 targetPosition = heroTransform.position;
-        Vector3 targetVector = targetPosition - transform.position;
-
-        //if (targetVector.magnitude < aggroDistance)
-        //{
-        //    //alert.SetActive(true);
-        //    if (Mathf.Abs(targetVector.magnitude) > 1)
-        //    {
-        //        //Vector3 unitVector = targetVector / targetVector.magnitude;
-
-        //        agent.SetDestination(heroTransform.position);
-
-        //        var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
-
-        //        if (enemyAngle < 0.0f)
-        //            enemyAngle += 360;
-
-        //        if (enemyAngle >= 315f || enemyAngle < 45f)
-        //        { /* Right */
-        //            sr.flipX = false;
-        //            anim.SetBool("idle", false);
-        //            anim.SetInteger("direction", 1);
-        //        }
-        //        else if (enemyAngle >= 135f && enemyAngle < 225f)
-        //        { /* Left */
-        //            sr.flipX = true;
-        //            anim.SetBool("idle", false);
-        //            anim.SetInteger("direction", 1);
-        //        }
-        //        else if (enemyAngle >= 45f && enemyAngle < 135f)
-        //        { /* Up */
-        //            anim.SetBool("idle", false);
-        //            anim.SetInteger("direction", 3);
-        //        }
-        //        else if (enemyAngle >= 225f && enemyAngle < 315f)
-        //        { /* Down */
-        //            anim.SetBool("idle", false);
-        //            anim.SetInteger("direction", 0);
-        //        }
-        //    }
-        //    else if (!attacking)
-        //    {
-        //        agent.SetDestination(transform.position);
-        //        //Attack(attackHitboxes[0]);
-        //    }
-        //}
-        //else
-        //{
-        //    alert.SetActive(false);
-        //    //timer += Time.deltaTime;
-
-        //    //if (timer >= wanderTimer)
-        //    //{
-        //    //    Vector3 newPos = RandomNavSphere(startPosition, wanderRadius, -1);
-        //    //    agent.SetDestination(newPos);
-        //    //    timer = 0;
-        //    //}
-        //    // check which way he is facing, set idle animation to that one
-        //    if (!attacking)
-        //    {
-
-        //        if (agent.velocity.magnitude != 0) // if agent is wandering, walk
-        //        {
-
-        //            var enemyAngle = Mathf.Atan2(targetVector.z, targetVector.x) * Mathf.Rad2Deg;
-
-        //            if (enemyAngle >= 315f || enemyAngle < 45f)
-        //            { /* Right */
-        //                sr.flipX = false;
-        //                anim.SetBool("idle", false);
-        //                anim.SetInteger("direction", 1);
-        //            }
-        //            else if (enemyAngle >= 135f && enemyAngle < 225f)
-        //            { /* Left */
-        //                sr.flipX = true;
-        //                anim.SetBool("idle", false);
-        //                anim.SetInteger("direction", 1);
-        //            }
-        //            else if (enemyAngle >= 45f && enemyAngle < 135f)
-        //            { /* Up */
-        //                anim.SetBool("idle", false);
-        //                anim.SetInteger("direction", 3);
-        //            }
-        //            else if (enemyAngle >= 225f && enemyAngle < 315f)
-        //            { /* Down */
-        //                anim.SetBool("idle", false);
-        //                anim.SetInteger("direction", 0);
-        //            }
-
-        //        }
-        //        else // If agent isn't wandering, idle
-        //        {
-        //            int currAnim = anim.GetInteger("direction");
-        //            if (currAnim == 3)
-        //            {
-        //                anim.SetBool("idle", true);
-        //            }
-        //            else if (currAnim == 1)
-        //            {
-        //                anim.SetBool("idle", true);
-        //            }
-        //            else
-        //            {
-        //                anim.SetBool("idle", true);
-        //            }
-        //        }
-        //    }
-        //}
+        
     }
 
     override public void takeDamage(int damage)
@@ -162,8 +62,10 @@ public class Necromancer : EnemyController {
             var clone = (GameObject)Instantiate(damageNumber, transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
             clone.GetComponent<FloatingText>().damageNumber = -1 * damage;
 
-            if (health <= 0) {}
+            if (health <= 0) {
                 // kill necro
+                isAlive = false;
+            }
         }
     }
 
@@ -176,8 +78,10 @@ public class Necromancer : EnemyController {
             var clone = (GameObject)Instantiate(damageNumber, gameObject.transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
             clone.GetComponent<FloatingText>().damageNumber = defense - damage;
 
-            if (health <= 0) {}
+            if (health <= 0) {
                 // kill necro
+                isAlive = false;
+            }
         }
     }
 }

@@ -346,6 +346,7 @@
     <Compile Include="Assets\Scripts\Traps\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Traps\TrapBase.cs" />
     <Compile Include="Assets\startover.cs" />
+    <Compile Include="Assets\Scripts\Enemies\SkeletonSpawn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scenes\ReadMe-HowToMerge.txt" />
