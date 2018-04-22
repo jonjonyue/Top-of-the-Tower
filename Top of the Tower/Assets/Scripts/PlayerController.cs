@@ -230,13 +230,17 @@ public class PlayerController : character {
 			level = 3;
 		} else if (level == 3) {
 			//Adrien code here
+			Vector3 move = new Vector3 (240.3f, .91f, -260.7f);
+			cc.gameObject.transform.position = move;
 			level = 4;
-			GameObject upgrade = GameObject.Find("GUI");
+		} else if (level == 4) {
+			GameObject upgrade = GameObject.Find ("GUI");
 			GameObject up1 = upgrade.transform.Find ("Win").gameObject;
 			//GameObject up2 = upgrade.transform.Find ("Upgrade").gameObject;
-			up1.SetActive(true);
+			up1.SetActive (true);
 			//up2.SetActive(false);
 			Time.timeScale = 0f;
 		}
+
     }
 }
