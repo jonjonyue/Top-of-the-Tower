@@ -297,6 +297,7 @@ public class EnemyController : character
 
     IEnumerator flinch()
     {
+        attacking = true;
         int animLayer = 0;
         string stateName = "flinch";
         anim.SetTrigger("flinch");
@@ -311,6 +312,7 @@ public class EnemyController : character
 
         //Done playing. Do something below!
         //Debug.Log("flinched");
+        attacking = false;
     }
 
     void dead()

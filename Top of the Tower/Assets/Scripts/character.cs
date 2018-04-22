@@ -17,8 +17,8 @@ public class character : MonoBehaviour
     public int strength;
 
 	// Code variables
-	public bool isAlive = true;
-	public bool attacking = false;
+    [HideInInspector] public bool isAlive = true;
+    [HideInInspector] public bool attacking = false;
 
     // GUI
     public Slider healthSlider;
