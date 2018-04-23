@@ -33,26 +33,28 @@ public class explosion : MonoBehaviour
         while (!anim.GetCurrentAnimatorStateInfo(0).IsName("idle"))
         {
             timer += Time.deltaTime;
-            if (timer < .8f) 
+            if (timer < .8f)
                 transform.position = GameObject.Find("Hero").transform.position;
             yield return null;
         }
-        //while (anim.GetCurrentAnimatorStateInfo(0).IsName("idle"))
-        //{
-        //    yield return null;
-        //}
         col.enabled = true;
         Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
-        Debug.Log(cols.Length);
+        Debug.Log("Explosion hitting " + cols.Length + " targets");
 
         //ATTACK MECHANICS
         foreach (Collider c in cols)
         {
             if (c.tag == "Player")
             {
-                Debug.Log("Hit!");
+                Debug.Log("Hit hero!");
                 GameObject.Find("Hero").GetComponent<PlayerController>().takeDamage(explosionDamage);
+            }
+            if (c.tag == "Enemy") {
+                Debug.Log("Hit enemy!");
+                SkeletonSpawn s = c.GetComponentInParent<SkeletonSpawn>();
+                if (s != null)
+                    s.takeDamage(explosionDamage);
             }
         }
     }
