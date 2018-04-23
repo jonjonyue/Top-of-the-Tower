@@ -1,11 +1,12 @@
 ﻿<Properties StartupConfiguration="{27317A66-3987-9C1B-2115-EB0C0877544D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemies/Necromancer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/lockedRoom.cs">
     <Files>
       <File FileName="Assets/Scripts/character.cs" Line="21" Column="23" />
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="124" Column="34" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="231" Column="27" />
       <File FileName="Assets/Scripts/Enemies/EnemyController.cs" Line="302" Column="37" />
       <File FileName="Assets/Scripts/explosion.cs" Line="36" Column="27" />
-      <File FileName="Assets/Scripts/Enemies/Necromancer.cs" Line="89" Column="36" NotebookId="1" />
+      <File FileName="Assets/Scripts/lockedRoom.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Enemies/Necromancer.cs" Line="41" Column="98" NotebookId="1" />
       <File FileName="Assets/Scripts/Enemies/Slime.cs" Line="68" Column="29" NotebookId="1" />
       <File FileName="Assets/Scripts/Enemies/SkeletonSpawn.cs" Line="13" Column="14" NotebookId="1" />
       <File FileName="Assets/Scripts/Enemies/Skeleton.cs" Line="1" Column="1" NotebookId="1" />

@@ -272,6 +272,12 @@
     <Reference Include="UnityEditor.VR">
       <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
     </Reference>
+    <Reference Include="Vuforia.UnityExtensions.Editor">
+      <HintPath>/Applications/Unity/PlaybackEngines/VuforiaSupport/Managed/Editor/Vuforia.UnityExtensions.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Vuforia.UnityExtensions">
+      <HintPath>/Applications/Unity/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Graphs">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
     </Reference>
@@ -333,11 +339,13 @@
     <Compile Include="Assets\Scripts\Enemies\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemies\Necromancer.cs" />
     <Compile Include="Assets\Scripts\Enemies\Skeleton.cs" />
+    <Compile Include="Assets\Scripts\Enemies\SkeletonSpawn.cs" />
     <Compile Include="Assets\Scripts\Enemies\Slime.cs" />
     <Compile Include="Assets\Scripts\Enemies\Zombie.cs" />
     <Compile Include="Assets\Scripts\explosion.cs" />
     <Compile Include="Assets\Scripts\FloatingText.cs" />
     <Compile Include="Assets\Scripts\hiddenDoor.cs" />
+    <Compile Include="Assets\Scripts\lockedRoom.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\PauseControl.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
@@ -346,7 +354,6 @@
     <Compile Include="Assets\Scripts\Traps\SawTrap.cs" />
     <Compile Include="Assets\Scripts\Traps\TrapBase.cs" />
     <Compile Include="Assets\startover.cs" />
-    <Compile Include="Assets\Scripts\Enemies\SkeletonSpawn.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scenes\ReadMe-HowToMerge.txt" />

@@ -8,6 +8,7 @@ public class Necromancer : EnemyController
 
     // Necromancer stuff
     [Header("Necromancer Stuff")]
+    public int warpDistance;
     public GameObject explosion;
     public Transform[] skeletonSpawns;
     public GameObject skeleton;
@@ -37,7 +38,7 @@ public class Necromancer : EnemyController
 
     protected override void Update()
     {
-        if (isAlive && !port)
+        if (isAlive && !port && Vector3.Distance(transform.position, heroTransform.position) < 50)
         {
             if (timer > attackRate)
             {
@@ -145,7 +146,7 @@ public class Necromancer : EnemyController
             yield return null;
         }
         yield return new WaitForSeconds(.2f);
-        agent.Warp(RandomNavSphere(transform.position, 20, -1));
+        agent.Warp(RandomNavSphere(transform.position, warpDistance, -1));
         anim.SetTrigger("arrive");
         yield return new WaitForSeconds(.1f);
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("NecroArrive") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f) {
