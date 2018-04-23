@@ -8,6 +8,8 @@ public class SpawnScript : MonoBehaviour {
     GameObject item;
     public Sprite sprite;
     public RuntimeAnimatorController rac;
+	public int itemIndex;
+
     //List<string> itemString;
     //List<string> itemController;
 	SpriteRenderer spriteRenderer;
@@ -58,7 +60,32 @@ public class SpawnScript : MonoBehaviour {
 			foreach (Collider c in cols) {
 				if (c.tag == "Player") {
 					PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
-					player.heal (7);
+
+                    // switch on the item type
+                    switch (itemIndex)
+                    {
+                        case 1: // banana
+                            player.heal(player.maxHealth/5);
+                            break;
+                        case 2: // pill 
+                            player.tempAttackUp(Time.time);
+                            break;
+                        case 3: // ring - defense
+                            player.speed = player.speed + 1;
+                            break;
+                        case 4: // potion
+                            player.heal(player.maxHealth/2);
+                            break;
+                        case 5: // sword
+                            player.strength = player.strength + 1;
+                            break;
+                        //case 6: // tstar abandoned
+                        //    break;
+                    }
+
+
+
+					
 					hasBeenUsed = true;
 
 					/* FIXME */
@@ -71,6 +98,7 @@ public class SpawnScript : MonoBehaviour {
 
     void updateItem()
     {
+		
         //itemIndex = Random.Range(0, 0);
         //spriteRenderer.sprite = AssetDatabase.LoadAssetAtPath("Assets/" + itemString[itemIndex], typeof(Sprite)) as Sprite;
         //anim.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath("Assets/" + itemController[itemIndex], typeof(RuntimeAnimatorController)) as RuntimeAnimatorController;

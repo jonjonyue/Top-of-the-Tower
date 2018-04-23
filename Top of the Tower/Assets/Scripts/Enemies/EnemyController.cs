@@ -266,5 +266,37 @@ public class EnemyController : character {
 		alert.SetActive (false);
 		hitbox.SetActive (false);
         healthSlider.gameObject.SetActive(false);
+
+        // 75% chance spawn a new item
+        if (Random.Range(0, 3)>=1)
+        {
+            int itemIndex = Random.Range(1, 5);
+
+            if(itemIndex==3 || itemIndex == 5)
+            {
+                if(Random.Range(0, 100) > 90)// ~10% to spawn the permanent stats up
+                {
+                    spawnItem(itemIndex);
+                }
+            }
+            else
+            {
+                spawnItem(itemIndex);
+            }
+            
+        }
 	}
+
+    void spawnItem(int itemIndex)
+    {
+        Vector3 pos = transform.position; // position to spawn
+        //pos.y = pos.y + 1;
+        GameObject inst = GameObject.Find("Instances");
+
+         // item index - tstar ignored
+        Quaternion quat = transform.rotation; // item rotation
+
+        GameObject itemSpawned = Instantiate(inst.transform.GetChild(itemIndex).gameObject, pos, quat);
+        itemSpawned.SetActive(true);
+    }
 }
