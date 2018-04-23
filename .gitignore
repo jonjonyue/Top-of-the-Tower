@@ -37,3 +37,5 @@ sysinfo.txt
 *.exe
 *.xcodeproj
 *.unitypackage
+*.dwlt
+Top of the Tower/Library/LastSceneManagerSetup.txt

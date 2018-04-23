@@ -9,7 +9,7 @@ public class EnemyController : character
     // Enemy Specific Stats
     public float aggroDistance;
 
-    [HideInInspector]public Transform heroTransform;
+    [HideInInspector] public Transform heroTransform;
     public GameObject alert;
     public GameObject hitbox;
     public Collider[] attackHitboxes;
@@ -48,22 +48,19 @@ public class EnemyController : character
     {
         if (isAlive)
         {
-            if (Vector3.Distance(transform.position, heroTransform.position) < attackDistance || attacking)
+            if (Vector3.Distance(transform.position, heroTransform.position) < attackDistance && !attacking)
             {
                 Attack(attackHitboxes[0]);
             }
-            else
+            else if (!attacking)
             {
                 Move();
             }
         }
-
-        if (!counted)
+        else if (!counted)
         {
-            if (health <= 0)
-            {
-                counted = count();
-            }
+            counted = count();
+
         }
     }
 
@@ -97,34 +94,23 @@ public class EnemyController : character
 
     public virtual void Attack(Collider col)
     {
-        // can't do 2 attacks at once
-        if (!attacking)
-        {
+        // START THE ATTACK!!!
+        attacking = true;
 
-            // START THE ATTACK!!!
-            attacking = true;
+        //ATTACK ANIMATION
+        //Note: this depends on the direction (using Triggers)
+        StartCoroutine(attack(col));
 
-            //ATTACK ANIMATION
-            //Note: this depends on the direction (using Triggers)
-            anim.SetTrigger("attack");
-            StartCoroutine(wait(col));
-        }
     }
 
-    IEnumerator wait(Collider col)
-    {
+    public virtual IEnumerator attack(Collider col) {
         yield return new WaitForSeconds(Random.Range(.2f, .5f));
 
-        StartCoroutine(damage(col));
-    }
-
-    public virtual IEnumerator damage(Collider col)
-    {
+        anim.SetTrigger("attack");
 
         // Get the hitboxes hit by the attack
         Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
-        bool hit = false;
         //ATTACK MECHANICS
         foreach (Collider c in cols)
         {
@@ -132,22 +118,31 @@ public class EnemyController : character
             {
                 if (isAlive)
                 {
-                    PlayerController player = c.gameObject.GetComponentInParent<PlayerController>();
-                    Color originalColor = player.GetComponent<SpriteRenderer>().color;
-                    player.GetComponent<SpriteRenderer>().color = Color.red;
-                    yield return new WaitForSeconds(.2f);
-                    player.GetComponent<SpriteRenderer>().color = originalColor;
-                    player.takeCombatDamage(strength);
-                    yield return new WaitForSeconds(.4f);
-                    hit = true;
+                    StartCoroutine(damage());
                 }
             }
         }
-        if (!hit)
-            yield return new WaitForSeconds(.6f);
+        while (anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(.3f);
 
         // we are done attacking
         attacking = false;
+    }
+
+    public virtual IEnumerator damage()
+    {
+        PlayerController player = GameObject.Find("Hero").GetComponent<PlayerController>();
+        Color originalColor = player.GetComponent<SpriteRenderer>().color;
+        player.GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(.2f);
+        player.GetComponent<SpriteRenderer>().color = originalColor;
+        player.takeCombatDamage(strength);
+        yield return new WaitForSeconds(.4f);
+
     }
 
     // Moves the Player (if keys are down)

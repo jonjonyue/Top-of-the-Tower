@@ -6,9 +6,14 @@ public class Zombie : EnemyController {
 
 
 
-    override public IEnumerator damage(Collider col)
+    override public IEnumerator attack(Collider col)
     {
-        Debug.Log("Zombie Attack");
+        yield return new WaitForSeconds(Random.Range(.2f, .5f));
+
+        //Debug.Log("Zombie Attack");
+
+        anim.SetTrigger("attack");
+
         yield return new WaitForSeconds(.33f);
 
         // Get the hitboxes hit by the attack
@@ -19,14 +24,16 @@ public class Zombie : EnemyController {
         {
             if (c.tag == "Player")
             {
-                PlayerController player = c.gameObject.GetComponentInParent<PlayerController>();
-                Color originalColor = player.GetComponent<SpriteRenderer>().color;
-                player.GetComponent<SpriteRenderer>().color = Color.red;
-                yield return new WaitForSeconds(.2f);
-                player.GetComponent<SpriteRenderer>().color = originalColor;
-                player.takeCombatDamage(strength);
+                StartCoroutine(damage());
             }
         }
+
+        while (anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(.1f);
 
         // we are done attacking
         attacking = false;

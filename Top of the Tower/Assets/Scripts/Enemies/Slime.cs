@@ -31,22 +31,18 @@ public class Slime : EnemyController
                 Move();
             }
         }
-        else
+        else if (!counted)
         {
-
-            if (!counted)
-            {
-                counted = count();
-            }
+            counted = count();
         }
     }
 
     public override void Attack(Collider col)
     {
-        StartCoroutine(dashAttack());
+        StartCoroutine(attack(col));
     }
 
-    IEnumerator dashAttack()
+    public override IEnumerator attack(Collider col)
     {
         anim.SetTrigger("attack");
         attackStartPosition = transform.position;
@@ -62,8 +58,8 @@ public class Slime : EnemyController
             //Debug.Log("Remaining dash distance = " + agent.remainingDistance);
             if (!didHitWhileDashing)
             {
-                Collider col = attackHitboxes[0];
-                Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
+                Collider coll = attackHitboxes[0];
+                Collider[] cols = Physics.OverlapBox(coll.bounds.center, coll.bounds.extents, coll.transform.rotation, LayerMask.GetMask("Hitbox"));
 
                 //ATTACK MECHANICS
                 foreach (Collider c in cols)
@@ -72,7 +68,7 @@ public class Slime : EnemyController
                     {
                         Debug.Log("Hit!");
                         didHitWhileDashing = true;
-                        StartCoroutine(damage(attackHitboxes[0]));
+                        StartCoroutine(damage());
                     }
                 }
             }
@@ -86,7 +82,7 @@ public class Slime : EnemyController
         didHitWhileDashing = false;
     }
 
-    public override IEnumerator damage(Collider col)
+    public override IEnumerator damage()
     {
         PlayerController player = GameObject.Find("Hero").GetComponent<PlayerController>();
         Color originalColor = player.GetComponent<SpriteRenderer>().color;
