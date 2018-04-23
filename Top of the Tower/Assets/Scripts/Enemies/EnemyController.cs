@@ -46,7 +46,7 @@ public class EnemyController : character
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (isAlive)
+        if (isAlive && !didFlinch)
         {
             if (Vector3.Distance(transform.position, heroTransform.position) < attackDistance && !attacking)
             {
@@ -99,6 +99,7 @@ public class EnemyController : character
 
         //ATTACK ANIMATION
         //Note: this depends on the direction (using Triggers)
+
         StartCoroutine(attack(col));
 
     }
@@ -107,7 +108,6 @@ public class EnemyController : character
         yield return new WaitForSeconds(Random.Range(.2f, .5f));
 
         anim.SetTrigger("attack");
-
         // Get the hitboxes hit by the attack
         Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
@@ -124,10 +124,11 @@ public class EnemyController : character
         }
         while (anim.GetCurrentAnimatorStateInfo(0).IsName("attack"))
         {
+            Debug.Log("Attacking");
             yield return null;
         }
 
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.5f);
 
         // we are done attacking
         attacking = false;
@@ -292,7 +293,7 @@ public class EnemyController : character
 
     IEnumerator flinch()
     {
-        attacking = true;
+        didFlinch = true;
         int animLayer = 0;
         string stateName = "flinch";
         anim.SetTrigger("flinch");
@@ -307,7 +308,7 @@ public class EnemyController : character
 
         //Done playing. Do something below!
         //Debug.Log("flinched");
-        attacking = false;
+        didFlinch = false;
     }
 
     void dead()

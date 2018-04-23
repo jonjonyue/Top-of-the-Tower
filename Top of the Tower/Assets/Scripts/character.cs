@@ -19,6 +19,7 @@ public class character : MonoBehaviour
 	// Code variables
     [HideInInspector] public bool isAlive = true;
     [HideInInspector] public bool attacking = false;
+    [HideInInspector] public bool didFlinch = false;
 
     // GUI
     public Slider healthSlider;
