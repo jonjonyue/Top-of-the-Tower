@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\Enemies\Zombie.cs" />
      <Compile Include="Assets\Scripts\FloatingText.cs" />
      <Compile Include="Assets\Scripts\hiddenDoor.cs" />
+     <Compile Include="Assets\Scripts\lockedRoom.cs" />
      <Compile Include="Assets\Scripts\MenuManager.cs" />
      <Compile Include="Assets\Scripts\PauseControl.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />

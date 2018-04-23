@@ -20,4 +20,5 @@ public class BoulderTrap : TrapBase {
         glow.SetActive(false);
         boulder.GetComponent<Rigidbody>().velocity = new Vector3(0, -30, 0);
     }
+		
 }
