@@ -49,7 +49,7 @@ public class Necromancer : EnemyController
             if (spawnTimer > spawnRate)
             {
                 spawnTimer = 0;
-                spawnSkeleton();
+                StartCoroutine(spawnSkeleton());
             }
             timer += Time.deltaTime;
             spawnTimer += Time.deltaTime;
@@ -62,7 +62,7 @@ public class Necromancer : EnemyController
         GameObject explo = Instantiate(explosion, heroTransform.position, heroTransform.rotation) as GameObject;
     }
 
-    private void spawnSkeleton()
+    IEnumerator spawnSkeleton()
     {
         SkeletonSpawn[] spawns = GameObject.FindObjectsOfType<SkeletonSpawn>();
         int spawnsAlive = 0;
@@ -74,6 +74,12 @@ public class Necromancer : EnemyController
         {
             anim.SetTrigger("summon");
             int numSpawn = Mathf.RoundToInt(Random.Range(.5f, 4.4999f));
+
+            while (anim.GetCurrentAnimatorStateInfo(0).IsName("NecroSkelSpawn"))
+            {
+                yield return null;
+            }
+            yield return new WaitForSeconds(.3f);
 
             for (int i = 0; i < numSpawn; ++i)
             {
