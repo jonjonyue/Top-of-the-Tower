@@ -25,26 +25,34 @@ public class PlayerController : character {
 	*/
 
 	// Player Specific stats
-	public int mana;
-	private int maxHealth;
-	private int level;
-	private SpriteRenderer sr;
-	private Animator anim;
+    [HideInInspector]public float strTime;
+    [HideInInspector]public float endTime;
+    private bool buffed;
+    // Player Specific stats
+    [HideInInspector]public int mana;
+    [HideInInspector]public int maxHealth;
+    private int level;
+    private SpriteRenderer sr;
+    private Animator anim;
 
-	public BoxCollider[] attackHitboxes;
+    public BoxCollider[] attackHitboxes;
 
-	private CharacterController cc;
+    private CharacterController cc;
 
 
 	// Use this for initialization
 	void Start () {
-		sr = GetComponent<SpriteRenderer> ();
-		anim = GetComponent<Animator> ();
-		cc = GetComponent < CharacterController> ();
-		attacking = false;
-		healthSlider.value = health;
-		maxHealth = health;
-		level = 1;
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+        cc = GetComponent<CharacterController>();
+        attacking = false;
+        healthSlider.value = health;
+        maxHealth = health;
+        level = 1;
+
+        //strTime = Time.time;
+        endTime = Time.time;
+        buffed = false;
 	}
 	
 	// Update is called once per frame
@@ -56,6 +64,13 @@ public class PlayerController : character {
 			if (!attacking) 
 				Attack (attackHitboxes[0]);
 		}
+        if (buffed)
+        {
+            if (Time.time > endTime)
+            {
+                tempAttackUpRelease();
+            }
+        }
 	}
 
     // return how many enemies killed so faar
@@ -198,6 +213,24 @@ public class PlayerController : character {
 		healthSlider.value = health;
 		print ("Hero healed " + hpRestored + " damage...");
 	}
+
+    public void tempAttackUp(float start)
+    {
+        if (buffed)
+        {
+            endTime = start + 10f;
+            return;
+        }
+        buffed = true;
+        endTime = start + 10f;
+        strength = strength + 1;
+    }
+
+    void tempAttackUpRelease()
+    {
+        strength = strength - 1;
+        buffed = false;
+    }
 
 	void OnTriggerEnter(Collider collider) {
 		if (collider.tag == "NextLevel") {

@@ -13,7 +13,7 @@ public class character : MonoBehaviour
     [Header("Stats")]
 	public int health;
 	public int defense;
-	public int speed;
+	public float speed;
     public int strength;
 
 	// Code variables
