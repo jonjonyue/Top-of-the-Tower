@@ -44,6 +44,7 @@ public class Slime : EnemyController
 
     public override IEnumerator attack(Collider col)
     {
+        yield return new WaitForSeconds(Random.Range(.2f, .5f));
         anim.SetTrigger("attack");
         attackStartPosition = transform.position;
         Vector3 targetVector = (transform.position - heroTransform.position) * -1.5f;
