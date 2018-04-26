@@ -244,11 +244,15 @@ public class PlayerController : character {
 		if (collider.tag == "NextLevel") {
             respawn();
 			GameObject upgrade = GameObject.Find("GUI");
-			GameObject up = upgrade.transform.Find ("Upgrade").gameObject;
-			if (level != 4) {
+            if (level != 4) {
+                GameObject up = upgrade.transform.Find("Upgrade").gameObject;
 				up.SetActive(true);
 				Time.timeScale = 0f;
-			}
+            } else if (level == 4) {
+                GameObject up = upgrade.transform.Find("Necromancer").gameObject;
+                up.SetActive(true);
+                Time.timeScale = 0f;
+            }
 
 		}
 		if (collider.tag == "Respawn") {
@@ -256,7 +260,7 @@ public class PlayerController : character {
 		}
 	}
 
-    void respawn() {
+    public void respawn() {
         maxHealth += 20;
         healthSlider.maxValue += 20;
         health = maxHealth;

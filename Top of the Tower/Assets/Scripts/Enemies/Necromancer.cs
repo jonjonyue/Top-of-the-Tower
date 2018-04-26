@@ -117,6 +117,7 @@ public class Necromancer : EnemyController
             {
                 // kill necro
                 isAlive = false;
+                GameObject.Find("Hero").GetComponent<PlayerController>().respawn();
             }
         }
     }
@@ -140,6 +141,7 @@ public class Necromancer : EnemyController
             {
                 // kill necro
                 isAlive = false;
+                GameObject.Find("Hero").GetComponent<PlayerController>().respawn();
             }
         }
     }
