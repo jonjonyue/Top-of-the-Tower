@@ -67,7 +67,7 @@ public class Slime : EnemyController
                 {
                     if (c.tag == "Player")
                     {
-                        Debug.Log("Hit!");
+                        //Debug.Log("Hit!");
                         didHitWhileDashing = true;
                         StartCoroutine(damage());
                     }
@@ -76,7 +76,7 @@ public class Slime : EnemyController
             yield return null;
         }
 
-        Debug.Log("Attack End");
+        //Debug.Log("Attack End");
         agent.speed = 1.5f;
         yield return new WaitForSeconds(.5f);
         attacking = false;

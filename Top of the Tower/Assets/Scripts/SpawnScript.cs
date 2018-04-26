@@ -41,6 +41,7 @@ public class SpawnScript : MonoBehaviour {
         //itemController.Add("items/Banana/banana_0.controller");
 
         updateItem();
+        transform.SetSiblingIndex(itemIndex);
     }
 	
 	// Update is called once per frame
@@ -64,19 +65,19 @@ public class SpawnScript : MonoBehaviour {
                     // switch on the item type
                     switch (itemIndex)
                     {
-                        case 1: // banana
+                        case 0: // banana
                             player.heal(player.maxHealth/5);
                             break;
-                        case 2: // pill 
+                        case 1: // pill 
                             player.tempAttackUp(Time.time);
                             break;
-                        case 3: // ring - defense
+                        case 2: // ring - defense
                             player.speed = player.speed + .2f;
                             break;
-                        case 4: // potion
+                        case 3: // potion
                             player.heal(player.maxHealth/2);
                             break;
-                        case 5: // sword
+                        case 4: // sword
                             player.strength = player.strength + 1;
                             break;
                     }

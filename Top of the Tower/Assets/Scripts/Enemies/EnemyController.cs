@@ -319,14 +319,14 @@ public class EnemyController : character
         hitbox.SetActive(false);
         healthSlider.gameObject.SetActive(false);
 
-        // 75% chance spawn a new item
-        if (Random.Range(0, 3) >= 1)
+        // 50% chance spawn a new item
+        if (Random.Range(0, 4) > 1)
         {
-            int itemIndex = Random.Range(1, 5);
-
-            if (itemIndex == 3 || itemIndex == 5)
+            int itemIndex = Random.Range(0, 5);
+            //itemIndex = 2;
+            if (itemIndex == 2 || itemIndex == 4)
             {
-                if (Random.Range(0, 100) > 90)// ~10% to spawn the permanent stats up
+                if (Random.Range(0, 100) < 50)// 50% * 40% * 50% to spawn the permanent stats up
                 {
                     spawnItem(itemIndex);
                 }

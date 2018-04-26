@@ -30,7 +30,7 @@ public class TrapBase : MonoBehaviour
         {
             if ((c.tag == "Player") && !activated)
             {
-                Debug.Log(name + " activated");
+                //Debug.Log(name + " activated");
                 activateTrap();
                 activated = true;
                 StartCoroutine(damageTargets());

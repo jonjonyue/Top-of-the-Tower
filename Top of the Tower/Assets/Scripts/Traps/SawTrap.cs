@@ -30,7 +30,7 @@ public class SawTrap : TrapBase {
             {
                 if (b.tag == "Player" || b.tag == "Enemy")
                     b.gameObject.GetComponentInParent<character>().takeDamage(damage);
-                Debug.Log(b.tag);
+                //Debug.Log(b.tag);
             }
 
             yield return new WaitForSeconds(.25f);

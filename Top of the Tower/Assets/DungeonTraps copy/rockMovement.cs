@@ -22,7 +22,7 @@ public class rockMovement : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("rock collided w player");
+            //Debug.Log("rock collided w player");
             pc.takeDamage(2);
         }
         else if (collision.gameObject.tag == "Enemy")

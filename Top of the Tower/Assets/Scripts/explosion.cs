@@ -40,18 +40,18 @@ public class explosion : MonoBehaviour
         col.enabled = true;
         Collider[] cols = Physics.OverlapBox(col.bounds.center, col.bounds.extents, col.transform.rotation, LayerMask.GetMask("Hitbox"));
 
-        Debug.Log("Explosion hitting " + cols.Length + " targets");
+        //Debug.Log("Explosion hitting " + cols.Length + " targets");
 
         //ATTACK MECHANICS
         foreach (Collider c in cols)
         {
             if (c.tag == "Player")
             {
-                Debug.Log("Hit hero!");
+                //Debug.Log("Hit hero!");
                 GameObject.Find("Hero").GetComponent<PlayerController>().takeDamage(explosionDamage);
             }
             if (c.tag == "Enemy") {
-                Debug.Log("Hit enemy!");
+                //Debug.Log("Hit enemy!");
                 SkeletonSpawn s = c.GetComponentInParent<SkeletonSpawn>();
                 if (s != null)
                     s.takeDamage(explosionDamage);

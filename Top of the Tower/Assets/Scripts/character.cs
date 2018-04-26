@@ -39,7 +39,7 @@ public class character : MonoBehaviour
     virtual public void takeDamage(int damage) {
 		health -= damage;
 
-        Debug.Log (gameObject.name + " taking " + damage + " damage.");
+        //Debug.Log (gameObject.name + " taking " + damage + " damage.");
 		if (health <= 0) {
 			Destroy (gameObject);
 		}
@@ -50,7 +50,7 @@ public class character : MonoBehaviour
         if (damage < 0)
             health -= damage;
 
-        Debug.Log(gameObject.name + " taking " + damage + " damage.");
+        //Debug.Log(gameObject.name + " taking " + damage + " damage.");
         if (health <= 0)
         {
             Destroy(gameObject);

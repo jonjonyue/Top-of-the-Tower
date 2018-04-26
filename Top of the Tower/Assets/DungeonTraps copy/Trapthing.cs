@@ -37,15 +37,15 @@ public class TrapThing: MonoBehaviour
             {
                 trapActivate = true;
   
-                Debug.Log(count);
-                Debug.Log("collided w needle");
+                //Debug.Log(count);
+                //Debug.Log("collided w needle");
                 //boulderMR.enabled = true;
                 pc.takeDamage(2);
                 count = 1;
             }
             else if (c.tag == "Player")
             {
-                Debug.Log("second count" + count);
+                //Debug.Log("second count" + count);
                 needleMR.enabled = false;
                // boulderMR.enabled = false;
             }
@@ -59,15 +59,15 @@ public class TrapThing: MonoBehaviour
         {
             trapActivate = true;
 
-            Debug.Log(count);
-            Debug.Log("collided w needle");
+            //Debug.Log(count);
+            //Debug.Log("collided w needle");
             //boulderMR.enabled = true;
             pc.takeDamage(2);
             count = 1;
         }
         else if (col.gameObject.tag == "Player")
         {
-            Debug.Log("second count" + count);
+            //Debug.Log("second count" + count);
             needleMR.enabled = false;
             // boulderMR.enabled = false;
         }
