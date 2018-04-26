@@ -330,6 +330,8 @@ public class EnemyController : character
                 {
                     spawnItem(itemIndex);
                 }
+                else if (Random.Range(0, 100) < 20)
+                    spawnItem(0);
             }
             else
             {

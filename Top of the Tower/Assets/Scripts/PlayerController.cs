@@ -35,6 +35,9 @@ public class PlayerController : character {
     private SpriteRenderer sr;
     private Animator anim;
 
+    public Text strengthText;
+    public Text speedText;
+
     public BoxCollider[] attackHitboxes;
 
     private CharacterController cc;
@@ -53,6 +56,9 @@ public class PlayerController : character {
         //strTime = Time.time;
         endTime = Time.time;
         buffed = false;
+
+        strengthText.text = "" + strength;
+        speedText.text = "" + speed;
 	}
 	
 	// Update is called once per frame
@@ -209,9 +215,9 @@ public class PlayerController : character {
 			health = maxHealth;
 		else
 			health += hpRestored;
-		
+        var clone = (GameObject)Instantiate(damageNumber, transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
+        clone.GetComponent<FloatingText>().damageNumber = hpRestored;
 		healthSlider.value = health;
-		print ("Hero healed " + hpRestored + " damage...");
 	}
 
     public void tempAttackUp(float start)
@@ -224,12 +230,14 @@ public class PlayerController : character {
         buffed = true;
         endTime = start + 10f;
         strength = strength + 1;
+        strengthText.text = "" + strength;
     }
 
     void tempAttackUpRelease()
     {
         strength = strength - 1;
         buffed = false;
+        strengthText.text = "" + strength;
     }
 
 	void OnTriggerEnter(Collider collider) {

@@ -61,24 +61,31 @@ public class SpawnScript : MonoBehaviour {
 			foreach (Collider c in cols) {
 				if (c.tag == "Player") {
 					PlayerController player = c.gameObject.GetComponentInParent<PlayerController> ();
-
+                    GameObject clone = null;
                     // switch on the item type
                     switch (itemIndex)
                     {
                         case 0: // banana
-                            player.heal(player.maxHealth/5);
+                            player.heal(player.maxHealth/8);
                             break;
                         case 1: // pill 
                             player.tempAttackUp(Time.time);
+                            player.strengthText.text = "TEMP " + player.strength;
                             break;
                         case 2: // ring - defense
                             player.speed = player.speed + .2f;
+                            player.speedText.text = "" + player.speed;
+                            clone = (GameObject)Instantiate(player.damageNumber, player.transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), player.transform);
+                            clone.GetComponent<FloatingText>().setText("+1 Speed");
                             break;
                         case 3: // potion
-                            player.heal(player.maxHealth/2);
+                            player.heal(player.maxHealth/4);
                             break;
                         case 4: // sword
                             player.strength = player.strength + 1;
+                            player.strengthText.text = "" + player.strength;
+                            clone = (GameObject)Instantiate(player.damageNumber, player.transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), player.transform);
+                            clone.GetComponent<FloatingText>().setText("+1 Strength");
                             break;
                     }
 

@@ -18,8 +18,8 @@ public class FloatingText: MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
-        displayNumber.text = "" + damageNumber;
+        if (sanity == 0)
+            displayNumber.text = "" + damageNumber;
         if (damageNumber >= 0)
         {
             displayNumber.color = Color.green;
@@ -30,4 +30,10 @@ public class FloatingText: MonoBehaviour
         }
         transform.position = new Vector3(transform.position.x, transform.position.y + (moveSpeed * Time.deltaTime), transform.position.z);
 	}
+
+    public void setText(string input) {
+        damageNumber = 1;
+        sanity = 1;
+        displayNumber.text = input;
+    }
 }
