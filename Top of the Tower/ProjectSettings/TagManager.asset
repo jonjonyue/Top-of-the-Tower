@@ -13,6 +13,8 @@ TagManager:
   - HiddenDoor
   - button
   - NextLevel
+  - LockedRoom
+  - Item
   layers:
   - Default
   - TransparentFX

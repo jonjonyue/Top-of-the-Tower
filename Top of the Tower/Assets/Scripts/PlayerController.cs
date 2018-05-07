@@ -220,6 +220,16 @@ public class PlayerController : character {
 		healthSlider.value = health;
 	}
 
+    public void statsInfo(string info)
+    {
+
+        var clone = (GameObject)Instantiate(damageNumber, transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), transform);
+        
+        clone.GetComponent<FloatingText>().setText(info);
+        //clone.GetComponent<FloatingText>().damageNumber = 0;
+        //healthSlider.value = health;
+    }
+
     public void tempAttackUp(float start)
     {
         if (buffed)

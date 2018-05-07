@@ -71,12 +71,13 @@ public class SpawnScript : MonoBehaviour {
                         case 1: // pill 
                             player.tempAttackUp(Time.time);
                             player.strengthText.text = "TEMP " + player.strength;
+                            player.statsInfo("Temparoray Attack +1");
                             break;
                         case 2: // ring - defense
                             player.speed = player.speed + .2f;
                             player.speedText.text = "" + player.speed;
                             clone = (GameObject)Instantiate(player.damageNumber, player.transform.position + new Vector3(0, 1, 0), Quaternion.Euler(Vector3.zero), player.transform);
-                            clone.GetComponent<FloatingText>().setText("+1 Speed");
+                            clone.GetComponent<FloatingText>().setText("+0.2 Speed");
                             break;
                         case 3: // potion
                             player.heal(player.maxHealth/4);
