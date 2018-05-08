@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1103,19 +1103,18 @@ MonoBehaviour:
   tutorialImage: {fileID: 2032224860}
   storyImage: {fileID: 1873311927}
   sprites:
-  - {fileID: 21300000, guid: 500b62ebed35344bb91243d0e539b566, type: 3}
-  - {fileID: 21300000, guid: 1285743536d814bf480ab04f958ba594, type: 3}
-  - {fileID: 21300000, guid: 9b0ffd9649c9241da9a2bcc843e96aca, type: 3}
-  - {fileID: 21300000, guid: 6dbe4209e478b431b9bd965c005f378b, type: 3}
-  - {fileID: 21300000, guid: 727783d9332464190b4285915fb1b1f3, type: 3}
-  - {fileID: 21300000, guid: 3febd4bf628524aac9ee5bf2ce0aa31e, type: 3}
-  - {fileID: 21300000, guid: a89fb3b933e6f44cf874175bd0c563cc, type: 3}
-  - {fileID: 21300000, guid: 24174ded0889c470388f06a0e285ab34, type: 3}
-  - {fileID: 21300000, guid: afb8a25e28f4b48e7b46cafff7a1f832, type: 3}
-  - {fileID: 21300000, guid: 0c5a17fb5c3e345b0a1b9bd2e53d5cc0, type: 3}
-  - {fileID: 21300000, guid: b00b62b7c55f34414954b72bf2b155d0, type: 3}
-  - {fileID: 21300000, guid: 777b537e49e3b40d398e6f4a652a4033, type: 3}
-  - {fileID: 21300000, guid: 7fb3ce0bd039d4427ba46d4c880916d2, type: 3}
+  - {fileID: 21300000, guid: 188f73ce892604a2b8ea42a041944032, type: 3}
+  - {fileID: 21300000, guid: 52be13c3eb3a34849acd79e1fca9fd6e, type: 3}
+  - {fileID: 21300000, guid: d5ac6a4a2778a47ee861536e498da56b, type: 3}
+  - {fileID: 21300000, guid: 3c5d005eff4d24ee6bffc5736b07b0bc, type: 3}
+  - {fileID: 21300000, guid: 0c8ca47bf9d1f46d392bc3a591fc952d, type: 3}
+  - {fileID: 21300000, guid: 8b5d3437b07754978a92019a502530ba, type: 3}
+  - {fileID: 21300000, guid: ed98cfbb478e7443581b1f568c7da2f1, type: 3}
+  - {fileID: 21300000, guid: 41ac26a45316245b48d4631beee6a567, type: 3}
+  - {fileID: 21300000, guid: 87152f4d057834b088d81b60f5dd5a62, type: 3}
+  - {fileID: 21300000, guid: b50d615942beb4b0088706345a9a62c5, type: 3}
+  - {fileID: 21300000, guid: 6e0643c727edd4e3081fa9a3b64e7fea, type: 3}
+  - {fileID: 21300000, guid: 89b22e6d6eb524d9fbff3852783948f1, type: 3}
   story:
   - {fileID: 21300000, guid: 6206d1f0614c2444e8a232289fbeb36c, type: 3}
   - {fileID: 21300000, guid: b5a5e550b80104c2c9f82c6d95358f94, type: 3}
@@ -4949,7 +4948,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 500b62ebed35344bb91243d0e539b566, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 188f73ce892604a2b8ea42a041944032, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
